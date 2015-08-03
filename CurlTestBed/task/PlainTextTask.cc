@@ -38,7 +38,7 @@ void PlainTextTask::onFinalized(CURLcode res)
 std::string PlainTextTask::toStr()
 {
 	char buf[BUFSIZ];
-	sprintf(buf, "Plain-text download:%s", _taskUrl.c_str());
+	snprintf(buf, sizeof(buf), "Plain-text download:%s", _taskUrl.c_str());
 	return buf;
 }
 

@@ -23,6 +23,6 @@ void BinaryFileTask::onFinalized(CURLcode res) {
 
 std::string BinaryFileTask::toStr() {
 	char buf[BUFSIZ];
-	sprintf(buf, "Downloading to %s", _save.c_str());
+	snprintf(buf, sizeof(buf), "Downloading to %s", _save.c_str());
 	return buf;
 }
