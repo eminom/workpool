@@ -19,7 +19,7 @@ size_t BinaryStreamTask::writeFunc(void *ptr, size_t sz, size_t nmemb) {
 	if(left < tot) {
 		size_t now = end_ptr_ - begin_ptr_;
 		size_t req = tot - left + now;
-		realloc(req);
+		realloc(req * 2);  // realloc(req) for debug
 	}
 	memcpy(write_ptr_, ptr, tot);
 	write_ptr_ += tot;
