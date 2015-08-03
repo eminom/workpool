@@ -1,3 +1,5 @@
 *.sdf
 *.obj
 *.suo
+*.opensdf
+Debug
