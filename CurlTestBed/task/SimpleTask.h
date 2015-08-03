@@ -23,8 +23,15 @@ protected:
 
 public:
 	//Static should not change over time.
-	void perform();
+	int perform();
 	virtual std::string toStr();
+	CURLcode getLastCode();
+
+protected:
+	SimpleTask();
+
+private:
+	CURLcode lastCode_;
 };
 
 

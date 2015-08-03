@@ -3,7 +3,18 @@
 #include "SimpleTask.h"
 #include "CurlWrapper.h"
 
-void SimpleTask::perform()
+SimpleTask::SimpleTask()
+	:lastCode_(CURLE_OK)
+{
+
+}
+
+CURLcode SimpleTask::getLastCode()
+{
+	return lastCode_;
+}
+
+int SimpleTask::perform()
 {
 	onPrepare();
 	CurlHandleWrapper curl;
@@ -18,6 +29,8 @@ void SimpleTask::perform()
 	curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1 );
 	CURLcode res = curl_easy_perform(curl);
 	onFinalized(res);
+	lastCode_ = res;
+	return res;
 }
 
 void SimpleTask::onPrepare()
