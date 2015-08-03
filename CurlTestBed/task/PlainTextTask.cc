@@ -20,3 +20,29 @@ size_t PlainTextTask::writeFunc(void *ptr, size_t size, size_t nmemb)
 	return (size * nmemb);
 }
 
+
+void PlainTextTask::onPrepare()
+{
+	_chunk = "";
+}
+
+void PlainTextTask::onFinalized(CURLcode res)
+{
+	__super::onFinalized(res);
+	if ( ! res)
+	{
+		printf("%s\n", _chunk.c_str());
+	}
+}
+
+std::string PlainTextTask::toStr()
+{
+	char buf[BUFSIZ];
+	sprintf(buf, "Plain-text download:%s", _taskUrl.c_str());
+	return buf;
+}
+
+std::string PlainTextTask::getStr()
+{
+	return _chunk;
+}

@@ -16,26 +16,11 @@ public:
 	PlainTextTask(const char *url);
 
 public:
-	virtual void onPrepare()override
-	{
-		_chunk = "";
-	}
+	virtual void onPrepare()override;
+	virtual void onFinalized(CURLcode res)override;
+	virtual std::string toStr();
 
-	virtual void onFinalized(CURLcode res)override
-	{
-		__super::onFinalized(res);
-		if ( ! res)
-		{
-			printf("%s\n", _chunk.c_str());
-		}
-	}
-
-	virtual std::string toStr()
-	{
-		char buf[BUFSIZ];
-		sprintf(buf, "Plain-text download:%s", _taskUrl.c_str());
-		return buf;
-	}
+	std::string getStr();
 
 private:
 	std::string _chunk;
