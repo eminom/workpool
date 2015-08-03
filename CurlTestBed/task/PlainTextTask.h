@@ -17,7 +17,7 @@ public:
 
 public:
 	virtual void onPrepare()override;
-	virtual void onFinalized(CURLcode res)override;
+	//virtual void onFinalized(CURLcode res)override;
 	virtual std::string toStr();
 
 	std::string getStr();

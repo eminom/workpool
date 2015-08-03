@@ -26,14 +26,14 @@ void PlainTextTask::onPrepare()
 	_chunk = "";
 }
 
-void PlainTextTask::onFinalized(CURLcode res)
-{
-	__super::onFinalized(res);
-	if ( ! res)
-	{
-		printf("%s\n", _chunk.c_str());
-	}
-}
+//void PlainTextTask::onFinalized(CURLcode res)
+//{
+//	__super::onFinalized(res);
+//	if ( ! res)
+//	{
+//		printf("%s\n", _chunk.c_str());
+//	}
+//}
 
 std::string PlainTextTask::toStr()
 {
