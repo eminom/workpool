@@ -9,9 +9,11 @@
 class Workload
 {
 	friend class ThreadPool;
+protected:
+	virtual ~Workload();
+
 public:
 	Workload();
-	virtual ~Workload();
 	
 public:// Working thread interface
 	virtual void execute() = 0;

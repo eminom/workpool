@@ -15,6 +15,11 @@ protected:
 	typedef std::function<void()> OnCleanup;
 
 protected:
+	~WorkloadWrapper()
+	{
+	}
+
+protected:
 	virtual void execute()override
 	{
 		if(!_execute()){
