@@ -20,6 +20,11 @@ void DeployOneFile(const char *from, const char *to){
 		GetCurrentDirectoryA(MAX_PATH, cur);
 		strcat(cur, "/");
 		strcat(cur, subpath);
+		for(int p=strlen(cur)-1;p>=0;--p){
+			if('/'==cur[p]){
+				cur[p] = '\\';
+			}
+		}
 		SECURITY_ATTRIBUTES sa={sizeof(SECURITY_ATTRIBUTES)};
 		int res = SHCreateDirectoryExA(NULL, cur, &sa);
 		//printf("Creating result = %d\n", res);
