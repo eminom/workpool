@@ -66,6 +66,12 @@
     <ClCompile Include="PhaseMan.cc">
       <Filter>SOURCE</Filter>
     </ClCompile>
+    <ClCompile Include="TaskMan.cc">
+      <Filter>SOURCE</Filter>
+    </ClCompile>
+    <ClCompile Include="MapInfo.cc">
+      <Filter>SOURCE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="thread\AsyncNotifier.h">

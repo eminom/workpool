@@ -82,7 +82,9 @@
     <ClCompile Include="deps\cJSON\cJSON.c" />
     <ClCompile Include="deps\xxhash\xxhash.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MapInfo.cc" />
     <ClCompile Include="PhaseMan.cc" />
+    <ClCompile Include="TaskMan.cc" />
     <ClCompile Include="task\BinaryFileTask.cc" />
     <ClCompile Include="task\BinaryStreamTask.cc" />
     <ClCompile Include="task\PlainTextTask.cc" />
