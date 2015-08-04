@@ -15,7 +15,9 @@ void BinaryFileTask::onFinalized(CURLcode res) {
 		if( FILE *fout = fopen(_save.c_str(), "wb") ) {
 			fwrite(begin_ptr_, 1, length, fout);
 			fclose(fout);
-			printf("binary stream saved to %s\n", _save.c_str());
+			//printf("binary stream saved to %s\n", _save.c_str());
+		} else {
+			fprintf(stderr, "Failed to open %s\n", _save.c_str());
 		}
 	} else {
 		fprintf(stderr,"Failed to download %s\n", _save.c_str());
@@ -24,6 +26,6 @@ void BinaryFileTask::onFinalized(CURLcode res) {
 
 std::string BinaryFileTask::toStr() {
 	char buf[BUFSIZ];
-	snprintf(buf, sizeof(buf), "Downloading to %s", _save.c_str());
+	snprintf(buf, sizeof(buf), "Downloading<%s>", _save.c_str());
 	return buf;
 }
