@@ -52,7 +52,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);CURL_STATICLIB</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)\deps\libcurl-vc-x86-release-dll-ipv6-sspi-winssl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\deps\libcurl-vc-x86-release-dll-ipv6-sspi-winssl\include;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -82,6 +82,7 @@
     <ClCompile Include="deps\cJSON\cJSON.c" />
     <ClCompile Include="deps\xxhash\xxhash.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PhaseMan.cc" />
     <ClCompile Include="task\BinaryFileTask.cc" />
     <ClCompile Include="task\BinaryStreamTask.cc" />
     <ClCompile Include="task\PlainTextTask.cc" />
@@ -95,7 +96,10 @@
     <ClInclude Include="deps\cJSON\cJSON.h" />
     <ClInclude Include="deps\xxhash\xxhash.h" />
     <ClInclude Include="DownloadWork.h" />
+    <ClInclude Include="EmComm.h" />
     <ClInclude Include="HotTaskItem.h" />
+    <ClInclude Include="PhaseMan.h" />
+    <ClInclude Include="TaskMan.h" />
     <ClInclude Include="task\BinaryFileTask.h" />
     <ClInclude Include="task\BinaryStreamTask.h" />
     <ClInclude Include="task\CurlWrapper.h" />

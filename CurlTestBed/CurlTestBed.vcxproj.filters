@@ -63,6 +63,9 @@
     <ClCompile Include="xxhashwrapper.cc">
       <Filter>SOURCE</Filter>
     </ClCompile>
+    <ClCompile Include="PhaseMan.cc">
+      <Filter>SOURCE</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="thread\AsyncNotifier.h">
@@ -105,6 +108,15 @@
       <Filter>SOURCE\deps\xxhash</Filter>
     </ClInclude>
     <ClInclude Include="xxhashwrapper.h">
+      <Filter>SOURCE</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskMan.h">
+      <Filter>SOURCE</Filter>
+    </ClInclude>
+    <ClInclude Include="PhaseMan.h">
+      <Filter>SOURCE</Filter>
+    </ClInclude>
+    <ClInclude Include="EmComm.h">
       <Filter>SOURCE</Filter>
     </ClInclude>
   </ItemGroup>

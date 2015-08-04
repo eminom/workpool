@@ -25,14 +25,27 @@ public:
 	operator bool()const{
 		return ok_;
 	}
+
+public:
+	const char *baseServer()const{
+		return baseUrl_.c_str();
+	}
+
+	const char* md5name()const{
+		return md5name_.c_str();
+	}
+
 private:
 	bool ok_;
+	std::string md5name_;	//~ 
+	std::string baseUrl_;
+
 public:
-	std::string rawEntry_;
-	std::string md5name_;
+	std::string rawEntry_;  //~ The raw line of the list file.
+	//Sub items of all.
+	
 	std::string xxhash_;
 	std::string path_;
-	std::string baseUrl_;
 	int length_;
 };
 
