@@ -39,7 +39,7 @@ void PlainTextTask::onPrepare()
 std::string PlainTextTask::toStr()
 {
 	char buf[BUFSIZ];
-	snprintf(buf, sizeof(buf), "Plain-text download:%s", _taskUrl.c_str());
+	snprintf(buf, sizeof(buf), "Plain-text-from<%s>", _taskUrl.c_str());
 	return buf;
 }
 

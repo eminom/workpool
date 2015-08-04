@@ -8,6 +8,7 @@
 #include <functional>
 #include "EmComm.h"
 #include "HotTaskItem.h"
+#include "MapInfo.h"
 
 typedef std::function<void()> WhenFinish;
 typedef const WhenFinish &WhenFinishProto;
@@ -21,8 +22,9 @@ private:
 	}
 
 public:
-	TaskMan(WhenFinishProto handle)
+	TaskMan(WhenFinishProto handle, const MapInfo &mi)
 		:doneHandle_(handle)
+		,_mi(mi)
 	{
 		_taskCount = 0;
 	}
@@ -54,6 +56,7 @@ public:
 private:
 	const WhenFinish doneHandle_;
 	std::atomic_int _taskCount;
+	MapInfo _mi;
 	//std::mutex _mutex;
 
 private:

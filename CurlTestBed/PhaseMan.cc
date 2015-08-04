@@ -37,9 +37,9 @@ std::vector<std::string> XSplit(const std::string &content, std::function<bool(c
 }
 
 void ScheduleDownload(HotTaskItem *_pHot__, TaskMan *taskMan) {
+	std::string taskURL = taskMan->formatResourceUri(_pHot__);
+	std::string savePath = taskMan->formatCachePath(_pHot__);
 	auto pHotInfo = new HotTaskItem(*_pHot__);
-	std::string taskURL = taskMan->formatResourceUri(pHotInfo);
-	std::string savePath = taskMan->formatCachePath(pHotInfo);
 	char* pSave = strdup(savePath.c_str());
 	SimpleTask* pTask = new BinaryFileTask(taskURL.c_str(), pSave);
 	Assign(WorkloadWrapper::create([=]{
@@ -102,12 +102,12 @@ void PhaseOne(const char *_versionCode__, const char *_baseServer__, const WhenF
 			}
 		}
 		if( tc > 0 ){
-			TaskMan *taskMan = new TaskMan(done);
+			TaskMan *taskMan = new TaskMan(done, MapInfo(ppt->getStr()));
 			taskMan->setTotalTask(tc);
 			for(const auto &line:rs) {
 				HotTaskItem item(line.c_str(), baseSvr);
 				if(item){
-					ScheduleDownload(&item, taskMan);
+					VerifyOneByOne(&item, taskMan);
 				}
 			}
 			printf("Work assigned.\n");
