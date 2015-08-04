@@ -121,11 +121,11 @@ void ThreadPool::listenNdAccept(ThreadUnit* tu) {
             _assignments.pop_front();
 			now->_isProcessing = 1;
         }while(0);
-		OutputBeforeProcess();
+		//OutputBeforeProcess();
 		AssignProtected(tu, assignment, now)
         now->execute();
 		AsyncNotifier::getInstance()->schedule([=]{now->finish();});
 		AssignProtected(tu, assignment, nullptr)
-		OutputAfterProcess()
+		//OutputAfterProcess()
     }while(true);
 }
