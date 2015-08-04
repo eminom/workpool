@@ -46,7 +46,7 @@ public:
 	bool deploy();
 
 public:
-	static std::string formatCachePath(HotTaskItem *pItem){
+	static std::string formatCachePath(TaskItemBase *pItem){
 		char name_buff[BUFSIZ];
 		snprintf(name_buff, sizeof(name_buff), "tmp/%s", pItem->md5name());
 		return name_buff;
@@ -56,6 +56,12 @@ public:
 		char taskURL[BUFSIZ<<2] = "";
 		snprintf(taskURL, sizeof(taskURL), "%s/resfolder/res/%s", pItem->baseServer(), pItem->md5name());
 		return taskURL;
+	}
+
+	static std::string formatTargetPath(TaskItemBase *pItem){
+		char targetPath[BUFSIZ] = "";
+		snprintf(targetPath, sizeof(targetPath), "ressrc/%s", pItem->relatePath());
+		return targetPath;
 	}
 
 private:
