@@ -80,6 +80,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="deps\cJSON\cJSON.c" />
+    <ClCompile Include="deps\xxhash\xxhash.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="task\BinaryFileTask.cc" />
     <ClCompile Include="task\BinaryStreamTask.cc" />
@@ -88,10 +89,13 @@
     <ClCompile Include="thread\AsyncNotifier.cc" />
     <ClCompile Include="thread\Workload.cc" />
     <ClCompile Include="thread\ThreadPool.cc" />
+    <ClCompile Include="xxhashwrapper.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="deps\cJSON\cJSON.h" />
+    <ClInclude Include="deps\xxhash\xxhash.h" />
     <ClInclude Include="DownloadWork.h" />
+    <ClInclude Include="HotTaskItem.h" />
     <ClInclude Include="task\BinaryFileTask.h" />
     <ClInclude Include="task\BinaryStreamTask.h" />
     <ClInclude Include="task\CurlWrapper.h" />
@@ -101,6 +105,7 @@
     <ClInclude Include="thread\Workload.h" />
     <ClInclude Include="thread\ThreadPool.h" />
     <ClInclude Include="thread\WorkloadWrapper.h" />
+    <ClInclude Include="xxhashwrapper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

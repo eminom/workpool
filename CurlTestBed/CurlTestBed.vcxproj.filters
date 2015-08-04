@@ -25,6 +25,9 @@
     <Filter Include="SOURCE\deps\cJSON">
       <UniqueIdentifier>{c9939db7-1832-4633-8bad-033f822b81e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SOURCE\deps\xxhash">
+      <UniqueIdentifier>{20e313d1-efab-41b3-be31-69361c8fc6b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -53,6 +56,12 @@
     </ClCompile>
     <ClCompile Include="deps\cJSON\cJSON.c">
       <Filter>SOURCE\deps\cJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="deps\xxhash\xxhash.c">
+      <Filter>SOURCE\deps\xxhash</Filter>
+    </ClCompile>
+    <ClCompile Include="xxhashwrapper.cc">
+      <Filter>SOURCE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +97,15 @@
     </ClInclude>
     <ClInclude Include="thread\WorkloadWrapper.h">
       <Filter>SOURCE\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="HotTaskItem.h">
+      <Filter>SOURCE</Filter>
+    </ClInclude>
+    <ClInclude Include="deps\xxhash\xxhash.h">
+      <Filter>SOURCE\deps\xxhash</Filter>
+    </ClInclude>
+    <ClInclude Include="xxhashwrapper.h">
+      <Filter>SOURCE</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
