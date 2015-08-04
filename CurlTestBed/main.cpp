@@ -29,7 +29,26 @@
 		std::cout<<os.str()<<std::endl;\
 	}while(0);
 
+void onUpdateFinish() {
+	printf("Update finished\n");
+}
 
+class One
+{
+public:
+	One(int v)
+		:val(v)
+	{
+
+	}
+	void doSo()
+	{
+		printf("Yes, done:%d\n", val);
+	}
+
+	int val;
+};
+One one(101);
 
 int main(){
 	//PrintThread();
@@ -45,7 +64,7 @@ int main(){
 		cJSON *cdn     = cJSON_GetObjectItem(root, "cdn");
 		//And this is a string. (Sure. Preconditioned)
 		printf("version -> %s\n", version->valuestring);
-		PhaseOne(version->valuestring, cdn->valuestring);
+		PhaseOne(version->valuestring, cdn->valuestring, std::bind(&One::doSo, &one));
 		cJSON_Delete(root);
 	}, [=]{
 	}));
