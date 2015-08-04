@@ -1,7 +1,7 @@
 	
 
 #include "PlainTextTask.h"
-#include "EmComm.h"
+#include "base/EmComm.h"
 
 PlainTextTask::PlainTextTask(const char *url)
 	:_taskUrl(url)

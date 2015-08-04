@@ -1,6 +1,6 @@
 
 #include "BinaryFileTask.h"
-#include "EmComm.h"
+#include "base/EmComm.h"
 
 BinaryFileTask::BinaryFileTask(const char *url, const char *save, int cap)
 	:BinaryStreamTask(url, cap)

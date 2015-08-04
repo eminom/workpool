@@ -4,7 +4,7 @@
 
 #include "Workload.h"
 #include <functional>
-#include "thread/AsyncNotifier.h"
+
 
 class WorkloadWrapper:public Workload
 {
@@ -15,43 +15,18 @@ protected:
 	typedef std::function<void()> OnCleanup;
 
 protected:
-	~WorkloadWrapper()
-	{
-	}
+	~WorkloadWrapper();
 
 protected:
-	virtual void execute()override
-	{
-		if(!_execute()){
-			AsyncNotifier::getInstance()->schedule(_onSuccess);
-		} else {
-			AsyncNotifier::getInstance()->schedule(_onFailure);
-		}
-		AsyncNotifier::getInstance()->schedule(_onCleanup);
-	}
-
-	virtual void finish()override
-	{
-		delete this;
-	}
-
-	virtual void cancel()override
-	{
-		delete this;
-	}
+	virtual void execute()override;
+	virtual void finish()override;
+	virtual void cancel()override;
 
 private:
-	WorkloadWrapper(const OnExecute &e, const OnCleanup &c, const OnSuccess &ok, const OnFailure &fail)
-		:_execute(e), _onCleanup(c), _onSuccess(ok), _onFailure(fail)
-	{
-
-	}
+	WorkloadWrapper(const OnExecute &e, const OnCleanup &c, const OnSuccess &ok, const OnFailure &fail);
 
 public:
-	static Workload* create(const OnExecute &e, const OnCleanup &cleanup, const OnSuccess &ok, const OnFailure &fail)
-	{
-		return new WorkloadWrapper(e, cleanup, ok, fail);
-	}
+	static Workload* create(const OnExecute &e, const OnCleanup &cleanup, const OnSuccess &ok, const OnFailure &fail);
 
 private:
 	OnExecute _execute;

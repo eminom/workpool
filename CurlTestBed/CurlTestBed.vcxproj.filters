@@ -28,6 +28,12 @@
     <Filter Include="SOURCE\deps\xxhash">
       <UniqueIdentifier>{20e313d1-efab-41b3-be31-69361c8fc6b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SOURCE\fsm">
+      <UniqueIdentifier>{3a7c68ba-ab72-4179-9c73-9b0e4ba3ddd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SOURCE\base">
+      <UniqueIdentifier>{fe089dc2-829f-4c2e-a18f-9872da3779ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -60,17 +66,23 @@
     <ClCompile Include="deps\xxhash\xxhash.c">
       <Filter>SOURCE\deps\xxhash</Filter>
     </ClCompile>
-    <ClCompile Include="xxhashwrapper.cc">
-      <Filter>SOURCE</Filter>
+    <ClCompile Include="fsm\DownloadWork.cc">
+      <Filter>SOURCE\fsm</Filter>
     </ClCompile>
-    <ClCompile Include="PhaseMan.cc">
-      <Filter>SOURCE</Filter>
+    <ClCompile Include="fsm\MapInfo.cc">
+      <Filter>SOURCE\fsm</Filter>
     </ClCompile>
-    <ClCompile Include="TaskMan.cc">
-      <Filter>SOURCE</Filter>
+    <ClCompile Include="fsm\PhaseMan.cc">
+      <Filter>SOURCE\fsm</Filter>
     </ClCompile>
-    <ClCompile Include="MapInfo.cc">
-      <Filter>SOURCE</Filter>
+    <ClCompile Include="fsm\TaskMan.cc">
+      <Filter>SOURCE\fsm</Filter>
+    </ClCompile>
+    <ClCompile Include="fsm\xxhashwrapper.cc">
+      <Filter>SOURCE\fsm</Filter>
+    </ClCompile>
+    <ClCompile Include="thread\WorkloadWrapper.cc">
+      <Filter>SOURCE\thread</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -95,9 +107,6 @@
     <ClInclude Include="task\SimpleTask.h">
       <Filter>SOURCE\task</Filter>
     </ClInclude>
-    <ClInclude Include="DownloadWork.h">
-      <Filter>SOURCE</Filter>
-    </ClInclude>
     <ClInclude Include="task\CurlWrapper.h">
       <Filter>SOURCE\task</Filter>
     </ClInclude>
@@ -107,26 +116,35 @@
     <ClInclude Include="thread\WorkloadWrapper.h">
       <Filter>SOURCE\thread</Filter>
     </ClInclude>
-    <ClInclude Include="HotTaskItem.h">
-      <Filter>SOURCE</Filter>
-    </ClInclude>
     <ClInclude Include="deps\xxhash\xxhash.h">
       <Filter>SOURCE\deps\xxhash</Filter>
     </ClInclude>
-    <ClInclude Include="xxhashwrapper.h">
-      <Filter>SOURCE</Filter>
+    <ClInclude Include="fsm\DownloadWork.h">
+      <Filter>SOURCE\fsm</Filter>
     </ClInclude>
-    <ClInclude Include="TaskMan.h">
-      <Filter>SOURCE</Filter>
+    <ClInclude Include="fsm\EmComm.h">
+      <Filter>SOURCE\fsm</Filter>
     </ClInclude>
-    <ClInclude Include="PhaseMan.h">
-      <Filter>SOURCE</Filter>
+    <ClInclude Include="fsm\HotTaskItem.h">
+      <Filter>SOURCE\fsm</Filter>
     </ClInclude>
-    <ClInclude Include="EmComm.h">
-      <Filter>SOURCE</Filter>
+    <ClInclude Include="fsm\MapInfo.h">
+      <Filter>SOURCE\fsm</Filter>
     </ClInclude>
-    <ClInclude Include="MapInfo.h">
-      <Filter>SOURCE</Filter>
+    <ClInclude Include="fsm\PhaseMan.h">
+      <Filter>SOURCE\fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="fsm\TaskItemBase.h">
+      <Filter>SOURCE\fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="fsm\TaskMan.h">
+      <Filter>SOURCE\fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="fsm\xxhashwrapper.h">
+      <Filter>SOURCE\fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="base\EmComm.h">
+      <Filter>SOURCE\base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

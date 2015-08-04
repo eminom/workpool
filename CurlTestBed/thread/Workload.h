@@ -10,9 +10,9 @@ class Workload
 {
 	friend class ThreadPool;
 protected:
-	virtual ~Workload();
+	virtual ~Workload() = 0;
 
-public:
+protected:
 	Workload();
 	
 public:// Working thread interface
@@ -28,6 +28,10 @@ public:// Scheduler thread
 private:
 	std::atomic_char _isCanceling;		// Manipulated by ThreadPool(these two)
 	std::atomic_char _isProcessing;
+
+private:
+	Workload(const Workload&);
+	void operator=(const Workload&);
 };
 
 #endif

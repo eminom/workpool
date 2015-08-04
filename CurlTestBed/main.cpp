@@ -19,8 +19,8 @@
 
 #include "deps/cJSON/cJSON.h"
 
-#include "DownloadWork.h"
-#include "PhaseMan.h"
+//#include "fsm/DownloadWork.h"
+#include "fsm/PhaseMan.h"
 
 #define PrintThread()\
 	do{\
@@ -67,6 +67,7 @@ int main(){
 		PhaseOne(version->valuestring, cdn->valuestring, std::bind(&One::doSo, &one));
 		cJSON_Delete(root);
 	}, [=]{
+		std::bind(&One::doSo, &one)();
 	}));
 
 	ThreadPool::getInstance()->start();

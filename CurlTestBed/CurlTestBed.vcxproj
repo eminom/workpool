@@ -81,10 +81,12 @@
   <ItemGroup>
     <ClCompile Include="deps\cJSON\cJSON.c" />
     <ClCompile Include="deps\xxhash\xxhash.c" />
+    <ClCompile Include="fsm\DownloadWork.cc" />
+    <ClCompile Include="fsm\MapInfo.cc" />
+    <ClCompile Include="fsm\PhaseMan.cc" />
+    <ClCompile Include="fsm\TaskMan.cc" />
+    <ClCompile Include="fsm\xxhashwrapper.cc" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MapInfo.cc" />
-    <ClCompile Include="PhaseMan.cc" />
-    <ClCompile Include="TaskMan.cc" />
     <ClCompile Include="task\BinaryFileTask.cc" />
     <ClCompile Include="task\BinaryStreamTask.cc" />
     <ClCompile Include="task\PlainTextTask.cc" />
@@ -92,17 +94,20 @@
     <ClCompile Include="thread\AsyncNotifier.cc" />
     <ClCompile Include="thread\Workload.cc" />
     <ClCompile Include="thread\ThreadPool.cc" />
-    <ClCompile Include="xxhashwrapper.cc" />
+    <ClCompile Include="thread\WorkloadWrapper.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="base\EmComm.h" />
     <ClInclude Include="deps\cJSON\cJSON.h" />
     <ClInclude Include="deps\xxhash\xxhash.h" />
-    <ClInclude Include="DownloadWork.h" />
-    <ClInclude Include="EmComm.h" />
-    <ClInclude Include="HotTaskItem.h" />
-    <ClInclude Include="MapInfo.h" />
-    <ClInclude Include="PhaseMan.h" />
-    <ClInclude Include="TaskMan.h" />
+    <ClInclude Include="fsm\DownloadWork.h" />
+    <ClInclude Include="fsm\EmComm.h" />
+    <ClInclude Include="fsm\HotTaskItem.h" />
+    <ClInclude Include="fsm\MapInfo.h" />
+    <ClInclude Include="fsm\PhaseMan.h" />
+    <ClInclude Include="fsm\TaskItemBase.h" />
+    <ClInclude Include="fsm\TaskMan.h" />
+    <ClInclude Include="fsm\xxhashwrapper.h" />
     <ClInclude Include="task\BinaryFileTask.h" />
     <ClInclude Include="task\BinaryStreamTask.h" />
     <ClInclude Include="task\CurlWrapper.h" />
@@ -112,7 +117,6 @@
     <ClInclude Include="thread\Workload.h" />
     <ClInclude Include="thread\ThreadPool.h" />
     <ClInclude Include="thread\WorkloadWrapper.h" />
-    <ClInclude Include="xxhashwrapper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
