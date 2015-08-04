@@ -52,13 +52,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);CURL_STATICLIB</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)\deps\libcurl-vc-x86-release-dll-ipv6-sspi-winssl\include;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\synker\deps\libcurl-vc-x86-release-dll-ipv6-sspi-winssl\include;$(ProjectDir);$(ProjectDir)\synker;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libcurl.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)\deps\libcurl-vc-x86-release-dll-ipv6-sspi-winssl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\synker\deps\libcurl-vc-x86-release-dll-ipv6-sspi-winssl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -79,44 +79,43 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="deps\cJSON\cJSON.c" />
-    <ClCompile Include="deps\xxhash\xxhash.c" />
-    <ClCompile Include="fsm\DownloadWork.cc" />
-    <ClCompile Include="fsm\MapInfo.cc" />
-    <ClCompile Include="fsm\PhaseMan.cc" />
-    <ClCompile Include="fsm\TaskMan.cc" />
-    <ClCompile Include="fsm\xxhashwrapper.cc" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="task\BinaryFileTask.cc" />
-    <ClCompile Include="task\BinaryStreamTask.cc" />
-    <ClCompile Include="task\PlainTextTask.cc" />
-    <ClCompile Include="task\SimpleTask.cc" />
-    <ClCompile Include="thread\AsyncNotifier.cc" />
-    <ClCompile Include="thread\Workload.cc" />
-    <ClCompile Include="thread\ThreadPool.cc" />
-    <ClCompile Include="thread\WorkloadWrapper.cc" />
+    <ClCompile Include="synker\deps\cJSON\cJSON.c" />
+    <ClCompile Include="synker\deps\xxhash\xxhash.c" />
+    <ClCompile Include="synker\fsm\DownloadWork.cc" />
+    <ClCompile Include="synker\fsm\MapInfo.cc" />
+    <ClCompile Include="synker\fsm\PhaseMan.cc" />
+    <ClCompile Include="synker\fsm\TaskMan.cc" />
+    <ClCompile Include="synker\fsm\xxhashwrapper.cc" />
+    <ClCompile Include="synker\task\BinaryFileTask.cc" />
+    <ClCompile Include="synker\task\BinaryStreamTask.cc" />
+    <ClCompile Include="synker\task\PlainTextTask.cc" />
+    <ClCompile Include="synker\task\SimpleTask.cc" />
+    <ClCompile Include="synker\thread\AsyncNotifier.cc" />
+    <ClCompile Include="synker\thread\ThreadPool.cc" />
+    <ClCompile Include="synker\thread\Workload.cc" />
+    <ClCompile Include="synker\thread\WorkloadWrapper.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="base\EmComm.h" />
-    <ClInclude Include="deps\cJSON\cJSON.h" />
-    <ClInclude Include="deps\xxhash\xxhash.h" />
-    <ClInclude Include="fsm\DownloadWork.h" />
-    <ClInclude Include="fsm\EmComm.h" />
-    <ClInclude Include="fsm\HotTaskItem.h" />
-    <ClInclude Include="fsm\MapInfo.h" />
-    <ClInclude Include="fsm\PhaseMan.h" />
-    <ClInclude Include="fsm\TaskItemBase.h" />
-    <ClInclude Include="fsm\TaskMan.h" />
-    <ClInclude Include="fsm\xxhashwrapper.h" />
-    <ClInclude Include="task\BinaryFileTask.h" />
-    <ClInclude Include="task\BinaryStreamTask.h" />
-    <ClInclude Include="task\CurlWrapper.h" />
-    <ClInclude Include="task\PlainTextTask.h" />
-    <ClInclude Include="task\SimpleTask.h" />
-    <ClInclude Include="thread\AsyncNotifier.h" />
-    <ClInclude Include="thread\Workload.h" />
-    <ClInclude Include="thread\ThreadPool.h" />
-    <ClInclude Include="thread\WorkloadWrapper.h" />
+    <ClInclude Include="synker\base\EmComm.h" />
+    <ClInclude Include="synker\deps\cJSON\cJSON.h" />
+    <ClInclude Include="synker\deps\xxhash\xxhash.h" />
+    <ClInclude Include="synker\fsm\DownloadWork.h" />
+    <ClInclude Include="synker\fsm\HotTaskItem.h" />
+    <ClInclude Include="synker\fsm\MapInfo.h" />
+    <ClInclude Include="synker\fsm\PhaseMan.h" />
+    <ClInclude Include="synker\fsm\TaskItemBase.h" />
+    <ClInclude Include="synker\fsm\TaskMan.h" />
+    <ClInclude Include="synker\fsm\xxhashwrapper.h" />
+    <ClInclude Include="synker\task\BinaryFileTask.h" />
+    <ClInclude Include="synker\task\BinaryStreamTask.h" />
+    <ClInclude Include="synker\task\CurlWrapper.h" />
+    <ClInclude Include="synker\task\PlainTextTask.h" />
+    <ClInclude Include="synker\task\SimpleTask.h" />
+    <ClInclude Include="synker\thread\AsyncNotifier.h" />
+    <ClInclude Include="synker\thread\ThreadPool.h" />
+    <ClInclude Include="synker\thread\Workload.h" />
+    <ClInclude Include="synker\thread\WorkloadWrapper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

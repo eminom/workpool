@@ -13,138 +13,138 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="SOURCE\task">
-      <UniqueIdentifier>{2890dc51-69e6-4f6c-88c9-4af22ca762d6}</UniqueIdentifier>
+    <Filter Include="SOURCE\synker">
+      <UniqueIdentifier>{ac611c91-56b7-4b47-bdc4-01704862d49e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SOURCE\thread">
-      <UniqueIdentifier>{dc6032f2-7e1b-4117-b404-ee936acd48b9}</UniqueIdentifier>
+    <Filter Include="SOURCE\synker\base">
+      <UniqueIdentifier>{17ece544-ddf8-4e93-9b10-e6b7ffbd1acd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SOURCE\deps">
-      <UniqueIdentifier>{ba969966-1e0c-4fa6-afc2-a8125da604ea}</UniqueIdentifier>
+    <Filter Include="SOURCE\synker\thread">
+      <UniqueIdentifier>{0893ccc5-4649-40cd-99da-190a75c009b2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SOURCE\deps\cJSON">
-      <UniqueIdentifier>{c9939db7-1832-4633-8bad-033f822b81e1}</UniqueIdentifier>
+    <Filter Include="SOURCE\synker\task">
+      <UniqueIdentifier>{2c3af0d0-a3b1-46b7-ae53-1e402244f36f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SOURCE\deps\xxhash">
-      <UniqueIdentifier>{20e313d1-efab-41b3-be31-69361c8fc6b5}</UniqueIdentifier>
+    <Filter Include="SOURCE\synker\deps">
+      <UniqueIdentifier>{88d759bf-ca0f-49ec-870d-c0763acbf738}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SOURCE\fsm">
-      <UniqueIdentifier>{3a7c68ba-ab72-4179-9c73-9b0e4ba3ddd5}</UniqueIdentifier>
+    <Filter Include="SOURCE\synker\fasm">
+      <UniqueIdentifier>{03376ef0-c3f1-48fe-abbe-e89ce235c5cf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SOURCE\base">
-      <UniqueIdentifier>{fe089dc2-829f-4c2e-a18f-9872da3779ef}</UniqueIdentifier>
+    <Filter Include="SOURCE\synker\deps\cJSON">
+      <UniqueIdentifier>{4d83e5ae-e6ce-41e6-a36c-e7560c6115e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SOURCE\synker\deps\xxhash">
+      <UniqueIdentifier>{815dd806-4dd5-492b-8901-97a9fca0ccc0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>SOURCE</Filter>
     </ClCompile>
-    <ClCompile Include="thread\AsyncNotifier.cc">
-      <Filter>SOURCE\thread</Filter>
+    <ClCompile Include="synker\fsm\DownloadWork.cc">
+      <Filter>SOURCE\synker\fasm</Filter>
     </ClCompile>
-    <ClCompile Include="thread\ThreadPool.cc">
-      <Filter>SOURCE\thread</Filter>
+    <ClCompile Include="synker\fsm\MapInfo.cc">
+      <Filter>SOURCE\synker\fasm</Filter>
     </ClCompile>
-    <ClCompile Include="thread\Workload.cc">
-      <Filter>SOURCE\thread</Filter>
+    <ClCompile Include="synker\fsm\PhaseMan.cc">
+      <Filter>SOURCE\synker\fasm</Filter>
     </ClCompile>
-    <ClCompile Include="task\SimpleTask.cc">
-      <Filter>SOURCE\task</Filter>
+    <ClCompile Include="synker\fsm\TaskMan.cc">
+      <Filter>SOURCE\synker\fasm</Filter>
     </ClCompile>
-    <ClCompile Include="task\PlainTextTask.cc">
-      <Filter>SOURCE\task</Filter>
+    <ClCompile Include="synker\fsm\xxhashwrapper.cc">
+      <Filter>SOURCE\synker\fasm</Filter>
     </ClCompile>
-    <ClCompile Include="task\BinaryStreamTask.cc">
-      <Filter>SOURCE\task</Filter>
+    <ClCompile Include="synker\task\BinaryFileTask.cc">
+      <Filter>SOURCE\synker\task</Filter>
     </ClCompile>
-    <ClCompile Include="task\BinaryFileTask.cc">
-      <Filter>SOURCE\task</Filter>
+    <ClCompile Include="synker\task\BinaryStreamTask.cc">
+      <Filter>SOURCE\synker\task</Filter>
     </ClCompile>
-    <ClCompile Include="deps\cJSON\cJSON.c">
-      <Filter>SOURCE\deps\cJSON</Filter>
+    <ClCompile Include="synker\task\PlainTextTask.cc">
+      <Filter>SOURCE\synker\task</Filter>
     </ClCompile>
-    <ClCompile Include="deps\xxhash\xxhash.c">
-      <Filter>SOURCE\deps\xxhash</Filter>
+    <ClCompile Include="synker\task\SimpleTask.cc">
+      <Filter>SOURCE\synker\task</Filter>
     </ClCompile>
-    <ClCompile Include="fsm\DownloadWork.cc">
-      <Filter>SOURCE\fsm</Filter>
+    <ClCompile Include="synker\thread\AsyncNotifier.cc">
+      <Filter>SOURCE\synker\thread</Filter>
     </ClCompile>
-    <ClCompile Include="fsm\MapInfo.cc">
-      <Filter>SOURCE\fsm</Filter>
+    <ClCompile Include="synker\thread\ThreadPool.cc">
+      <Filter>SOURCE\synker\thread</Filter>
     </ClCompile>
-    <ClCompile Include="fsm\PhaseMan.cc">
-      <Filter>SOURCE\fsm</Filter>
+    <ClCompile Include="synker\thread\Workload.cc">
+      <Filter>SOURCE\synker\thread</Filter>
     </ClCompile>
-    <ClCompile Include="fsm\TaskMan.cc">
-      <Filter>SOURCE\fsm</Filter>
+    <ClCompile Include="synker\thread\WorkloadWrapper.cc">
+      <Filter>SOURCE\synker\thread</Filter>
     </ClCompile>
-    <ClCompile Include="fsm\xxhashwrapper.cc">
-      <Filter>SOURCE\fsm</Filter>
+    <ClCompile Include="synker\deps\cJSON\cJSON.c">
+      <Filter>SOURCE\synker\deps\cJSON</Filter>
     </ClCompile>
-    <ClCompile Include="thread\WorkloadWrapper.cc">
-      <Filter>SOURCE\thread</Filter>
+    <ClCompile Include="synker\deps\xxhash\xxhash.c">
+      <Filter>SOURCE\synker\deps\xxhash</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="thread\AsyncNotifier.h">
-      <Filter>SOURCE\thread</Filter>
+    <ClInclude Include="synker\base\EmComm.h">
+      <Filter>SOURCE\synker\base</Filter>
     </ClInclude>
-    <ClInclude Include="thread\ThreadPool.h">
-      <Filter>SOURCE\thread</Filter>
+    <ClInclude Include="synker\fsm\DownloadWork.h">
+      <Filter>SOURCE\synker\fasm</Filter>
     </ClInclude>
-    <ClInclude Include="thread\Workload.h">
-      <Filter>SOURCE\thread</Filter>
+    <ClInclude Include="synker\fsm\HotTaskItem.h">
+      <Filter>SOURCE\synker\fasm</Filter>
     </ClInclude>
-    <ClInclude Include="task\BinaryFileTask.h">
-      <Filter>SOURCE\task</Filter>
+    <ClInclude Include="synker\fsm\MapInfo.h">
+      <Filter>SOURCE\synker\fasm</Filter>
     </ClInclude>
-    <ClInclude Include="task\BinaryStreamTask.h">
-      <Filter>SOURCE\task</Filter>
+    <ClInclude Include="synker\fsm\PhaseMan.h">
+      <Filter>SOURCE\synker\fasm</Filter>
     </ClInclude>
-    <ClInclude Include="task\PlainTextTask.h">
-      <Filter>SOURCE\task</Filter>
+    <ClInclude Include="synker\fsm\TaskItemBase.h">
+      <Filter>SOURCE\synker\fasm</Filter>
     </ClInclude>
-    <ClInclude Include="task\SimpleTask.h">
-      <Filter>SOURCE\task</Filter>
+    <ClInclude Include="synker\fsm\TaskMan.h">
+      <Filter>SOURCE\synker\fasm</Filter>
     </ClInclude>
-    <ClInclude Include="task\CurlWrapper.h">
-      <Filter>SOURCE\task</Filter>
+    <ClInclude Include="synker\fsm\xxhashwrapper.h">
+      <Filter>SOURCE\synker\fasm</Filter>
     </ClInclude>
-    <ClInclude Include="deps\cJSON\cJSON.h">
-      <Filter>SOURCE\deps\cJSON</Filter>
+    <ClInclude Include="synker\task\BinaryFileTask.h">
+      <Filter>SOURCE\synker\task</Filter>
     </ClInclude>
-    <ClInclude Include="thread\WorkloadWrapper.h">
-      <Filter>SOURCE\thread</Filter>
+    <ClInclude Include="synker\task\BinaryStreamTask.h">
+      <Filter>SOURCE\synker\task</Filter>
     </ClInclude>
-    <ClInclude Include="deps\xxhash\xxhash.h">
-      <Filter>SOURCE\deps\xxhash</Filter>
+    <ClInclude Include="synker\task\CurlWrapper.h">
+      <Filter>SOURCE\synker\task</Filter>
     </ClInclude>
-    <ClInclude Include="fsm\DownloadWork.h">
-      <Filter>SOURCE\fsm</Filter>
+    <ClInclude Include="synker\task\PlainTextTask.h">
+      <Filter>SOURCE\synker\task</Filter>
     </ClInclude>
-    <ClInclude Include="fsm\EmComm.h">
-      <Filter>SOURCE\fsm</Filter>
+    <ClInclude Include="synker\task\SimpleTask.h">
+      <Filter>SOURCE\synker\task</Filter>
     </ClInclude>
-    <ClInclude Include="fsm\HotTaskItem.h">
-      <Filter>SOURCE\fsm</Filter>
+    <ClInclude Include="synker\thread\AsyncNotifier.h">
+      <Filter>SOURCE\synker\thread</Filter>
     </ClInclude>
-    <ClInclude Include="fsm\MapInfo.h">
-      <Filter>SOURCE\fsm</Filter>
+    <ClInclude Include="synker\thread\ThreadPool.h">
+      <Filter>SOURCE\synker\thread</Filter>
     </ClInclude>
-    <ClInclude Include="fsm\PhaseMan.h">
-      <Filter>SOURCE\fsm</Filter>
+    <ClInclude Include="synker\thread\Workload.h">
+      <Filter>SOURCE\synker\thread</Filter>
     </ClInclude>
-    <ClInclude Include="fsm\TaskItemBase.h">
-      <Filter>SOURCE\fsm</Filter>
+    <ClInclude Include="synker\thread\WorkloadWrapper.h">
+      <Filter>SOURCE\synker\thread</Filter>
     </ClInclude>
-    <ClInclude Include="fsm\TaskMan.h">
-      <Filter>SOURCE\fsm</Filter>
+    <ClInclude Include="synker\deps\cJSON\cJSON.h">
+      <Filter>SOURCE\synker\deps\cJSON</Filter>
     </ClInclude>
-    <ClInclude Include="fsm\xxhashwrapper.h">
-      <Filter>SOURCE\fsm</Filter>
-    </ClInclude>
-    <ClInclude Include="base\EmComm.h">
-      <Filter>SOURCE\base</Filter>
+    <ClInclude Include="synker\deps\xxhash\xxhash.h">
+      <Filter>SOURCE\synker\deps\xxhash</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
