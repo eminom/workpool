@@ -98,6 +98,7 @@
     <ClInclude Include="DownloadWork.h" />
     <ClInclude Include="EmComm.h" />
     <ClInclude Include="HotTaskItem.h" />
+    <ClInclude Include="MapInfo.h" />
     <ClInclude Include="PhaseMan.h" />
     <ClInclude Include="TaskMan.h" />
     <ClInclude Include="task\BinaryFileTask.h" />
