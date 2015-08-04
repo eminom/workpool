@@ -39,6 +39,8 @@ public:
 			doneHandle_();
 		}
 	}
+	
+	void deploy();
 
 public:
 	static std::string formatCachePath(HotTaskItem *pItem){
