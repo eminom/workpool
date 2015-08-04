@@ -42,12 +42,12 @@ void VerifyOneByOne(HotTaskItem *_pHot__, TaskMan *taskMan){
 		unsigned int hex = calculateFileXXHASH(md5name);
 		char buf[32];
 		snprintf(buf, sizeof(buf), "%08x", hex);
-		//printf("Verifying %s to %s...\n", pHotInfo->xxhash_.c_str(), buf);
-		return strcmp(buf, pHotInfo->xxhash_.c_str());
+		//printf("Verifying %s to %s...\n", pHotInfo->xxHashStr(), buf);
+		return strcmp(buf, pHotInfo->xxHashStr());
 	}, [=]{
 		delete pHotInfo;
 	}, [=]{
-		printf("Verifying of \"%s\" is success !\n", pHotInfo->path_.c_str());
+		printf("Verifying of \"%s\" is success !\n", pHotInfo->relatePath());
 		taskMan->notifyTaskFinish();
 	}, [=]{
 		//~Failed, 

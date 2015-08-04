@@ -36,11 +36,14 @@ public:
 	void notifyTaskFinish()	{
 		_taskCount--;
 		if(0==_taskCount){
+			if(deploy()){
+				//Deploy done.
+			}
 			doneHandle_();
 		}
 	}
 	
-	void deploy();
+	bool deploy();
 
 public:
 	static std::string formatCachePath(HotTaskItem *pItem){
