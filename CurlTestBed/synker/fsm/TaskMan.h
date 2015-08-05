@@ -45,11 +45,6 @@ public:
 	
 	bool deploy();
 
-public:
-	static std::string formatCachePath(TaskItemBase *pItem);
-	static std::string formatTargetPath(TaskItemBase *pItem);
-	static std::string formatResourceUri(HotTaskItem *pItem);
-
 private:
 	const WhenFinish doneHandle_;
 	std::atomic_int _taskCount;

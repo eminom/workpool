@@ -4,6 +4,7 @@
 #include "task/PlainTextTask.h"
 #include "thread/ThreadPool.h"
 #include "thread/WorkloadWrapper.h"
+#include "pathhelper/PathHelper.h"
 
 #include <vector>
 #include <string>
@@ -15,8 +16,8 @@
 
 
 void ScheduleDownload(HotTaskItem *_pHot__, TaskMan *taskMan) {
-	std::string taskURL = taskMan->formatResourceUri(_pHot__);
-	std::string savePath = taskMan->formatCachePath(_pHot__);
+    std::string taskURL = PathHelper::formatResourceUri(_pHot__);
+    std::string savePath = PathHelper::formatCachePath(_pHot__);
 	auto pHotInfo = new HotTaskItem(*_pHot__);
 	char* pSave = strdup(savePath.c_str());
 	SimpleTask* pTask = new BinaryFileTask(taskURL.c_str(), pSave);
@@ -38,9 +39,9 @@ void ScheduleDownload(HotTaskItem *_pHot__, TaskMan *taskMan) {
 void VerifyOneByOne(HotTaskItem *_pHot__, TaskMan *taskMan){
 	HotTaskItem *pHotInfo = new HotTaskItem(*_pHot__);
 	Assign(WorkloadWrapper::create([=]{
-		char md5name[BUFSIZ];
-		snprintf(md5name, sizeof(md5name), "tmp/%s", pHotInfo->md5name());
-		unsigned int hex = calculateFileXXHASH(md5name);
+        std::string cache_file_path = PathHelper::formatCachePath(pHotInfo);
+        std::string cache_file_abs = PathHelper::getInstance().getWritablePath() + cache_file_path;
+		unsigned int hex = calculateFileXXHASH(cache_file_abs.c_str());
 		char buf[32];
 		snprintf(buf, sizeof(buf), "%08x", hex);
 		//printf("Verifying %s to %s...\n", pHotInfo->xxHashStr(), buf);
