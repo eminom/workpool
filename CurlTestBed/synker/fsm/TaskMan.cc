@@ -6,6 +6,8 @@
 #include <cstring>
 #include <cstdlib>
 
+#include "pathhelper/PathHelper.h"
+
 #ifdef _MSC_VER
 
 #include <windows.h>
@@ -44,31 +46,12 @@ bool TaskMan::deploy() {
 	for(const auto&line:vs){
 		TaskItemBase item(line);
 		if(item){
-			std::string from = formatCachePath(&item);
-			std::string to   = formatTargetPath(&item);
+            std::string from = PathHelper::formatCachePath(&item);
+            std::string to   = PathHelper::formatTargetPath(&item);
 			printf("<%s> => <%s>\n", from.c_str(), to.c_str());
 			DeployOneFile(from.c_str(), to.c_str());
 		}
 	}
 	return true;
-}
-
-
-std::string TaskMan::formatCachePath(TaskItemBase *pItem){
-	char name_buff[BUFSIZ] = "";
-	snprintf(name_buff, sizeof(name_buff), "tmp/%s", pItem->md5name());
-	return name_buff;
-}
-
-std::string TaskMan::formatTargetPath(TaskItemBase *pItem){
-	char targetPath[BUFSIZ] = "";
-	snprintf(targetPath, sizeof(targetPath), "ressrc/%s", pItem->relatePath());
-	return targetPath;
-}
-
-std::string TaskMan::formatResourceUri(HotTaskItem *pItem){
-	char taskURL[BUFSIZ<<2] = "";
-	snprintf(taskURL, sizeof(taskURL), "%s/resfolder/res/%s", pItem->baseServer(), pItem->md5name());
-	return taskURL;
 }
 
