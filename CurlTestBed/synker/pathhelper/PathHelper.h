@@ -17,11 +17,14 @@ private:
 public:
     static PathHelper& getInstance();
     void makeSureCachePath();
+    void makeSureTargetPath();
     void print();
     std::string getWritablePath();
+    void DeployOneFile(const char *from, const char *to);
     
 public:
     static const char* getCachePath();
+    static const char* getTargetPath();
     static std::string formatCachePath(TaskItemBase *pItem);
     static std::string formatTargetPath(TaskItemBase *pItem);
     static std::string formatResourceUri(HotTaskItem *pItem);

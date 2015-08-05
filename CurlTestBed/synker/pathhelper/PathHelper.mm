@@ -5,6 +5,9 @@
 #import <Foundation/Foundation.h>
 #include "base/EmComm.h"
 
+#define _PH_TARGET_PATH     "ressrc/"
+#define _PH_CACHE_PATH      "cache/"
+
 PathHelper PathHelper::_instance;
 
 PathHelper::PathHelper()
@@ -32,6 +35,15 @@ void PathHelper::makeSureCachePath()
     [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
 }
 
+void PathHelper::makeSureTargetPath()
+{
+    std::string pre = getWritablePath();
+    pre.append(getTargetPath());
+    NSString *path = [NSString stringWithUTF8String:pre.c_str()];
+    [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+}
+
+
 void PathHelper::print()
 {
     NSString *home = NSHomeDirectory();
@@ -46,18 +58,22 @@ void PathHelper::print()
 
 
 const char* PathHelper::getCachePath(){
-    return "cache/";
+    return _PH_CACHE_PATH;
 }
 
 std::string PathHelper::formatCachePath(TaskItemBase *pItem){
     char name_buff[BUFSIZ] = "";
-    snprintf(name_buff, sizeof(name_buff), "cache/%s", pItem->md5name());
+    snprintf(name_buff, sizeof(name_buff), _PH_CACHE_PATH "%s", pItem->md5name());
     return name_buff;
+}
+
+const char* PathHelper::getTargetPath(){
+    return _PH_TARGET_PATH;
 }
 
 std::string PathHelper::formatTargetPath(TaskItemBase *pItem){
     char targetPath[BUFSIZ] = "";
-    snprintf(targetPath, sizeof(targetPath), "ressrc/%s", pItem->relatePath());
+    snprintf(targetPath, sizeof(targetPath), _PH_TARGET_PATH "%s", pItem->relatePath());
     return targetPath;
 }
 
@@ -66,3 +82,24 @@ std::string PathHelper::formatResourceUri(HotTaskItem *pItem){
     snprintf(taskURL, sizeof(taskURL), "%s/resfolder/res/%s", pItem->baseServer(), pItem->md5name());
     return taskURL;
 }
+
+
+void PathHelper::DeployOneFile(const char *from, const char *to){
+    std::string pre = PathHelper::getInstance().getWritablePath();
+    std::string source = pre + from;
+    std::string target = pre + to;
+    
+    auto pos = target.rfind("/");
+    if(pos!=std::string::npos){
+        std::string subdir = target.substr(0, pos);
+        NSString *sub = [NSString stringWithUTF8String:subdir.c_str()];
+        [[NSFileManager defaultManager]createDirectoryAtPath:sub withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
+    
+    NSString *src = [NSString stringWithUTF8String:source.c_str()];
+    NSString *dst = [NSString stringWithUTF8String:target.c_str()];
+    [[NSFileManager defaultManager] copyItemAtPath:src toPath:dst error:nil];
+}
+     
+
