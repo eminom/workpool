@@ -1,5 +1,6 @@
 
 #include "BinaryStreamTask.h"
+#include <cstdlib>
 
 BinaryStreamTask::BinaryStreamTask(const char *url, int capacity)
 	:begin_ptr_(nullptr),

@@ -3,6 +3,9 @@
 #include "SimpleTask.h"
 #include "CurlWrapper.h"
 
+SimpleTask::~SimpleTask(){
+}
+
 SimpleTask::SimpleTask()
 	:lastCode_(CURLE_OK)
 {

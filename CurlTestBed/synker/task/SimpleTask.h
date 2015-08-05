@@ -26,6 +26,7 @@ public:
 	int perform();
 	virtual std::string toStr();
 	CURLcode getLastCode();
+    virtual ~SimpleTask() = 0;
 
 protected:
 	SimpleTask();

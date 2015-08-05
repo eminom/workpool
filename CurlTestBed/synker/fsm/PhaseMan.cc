@@ -11,6 +11,7 @@
 
 #include "xxhashwrapper.h"
 #include "MapInfo.h"
+#include <cstdlib>
 
 
 void ScheduleDownload(HotTaskItem *_pHot__, TaskMan *taskMan) {

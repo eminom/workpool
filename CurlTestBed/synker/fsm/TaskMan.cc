@@ -34,6 +34,9 @@ void DeployOneFile(const char *from, const char *to){
 
 #else
 
+void DeployOneFile(const char *from, const char *to){
+}
+
 #endif
 
 bool TaskMan::deploy() {
