@@ -36,9 +36,6 @@ void DeployOneFile(const char *from, const char *to){
 
 #else
 
-void DeployOneFile(const char *from, const char *to){
-}
-
 #endif
 
 bool TaskMan::deploy() {
@@ -49,7 +46,7 @@ bool TaskMan::deploy() {
             std::string from = PathHelper::formatCachePath(&item);
             std::string to   = PathHelper::formatTargetPath(&item);
 			printf("<%s> => <%s>\n", from.c_str(), to.c_str());
-			DeployOneFile(from.c_str(), to.c_str());
+            PathHelper::getInstance().DeployOneFile(from.c_str(), to.c_str());
 		}
 	}
 	return true;
