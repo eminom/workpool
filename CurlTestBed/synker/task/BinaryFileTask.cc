@@ -1,6 +1,7 @@
 
 #include "BinaryFileTask.h"
 #include "base/EmComm.h"
+#include "pathhelper/PathHelper.h"
 
 BinaryFileTask::BinaryFileTask(const char *url, const char *save, int cap)
 	:BinaryStreamTask(url, cap)
@@ -12,7 +13,11 @@ void BinaryFileTask::onFinalized(CURLcode res) {
 	BinaryStreamTask::onFinalized(res);
 	if(0==res) {
 		int length = write_ptr_ - begin_ptr_;
-		if( FILE *fout = fopen(_save.c_str(), "wb") ) {
+        //----- NEED THE ABSOLUTE PATH NOW.
+        std::string prepath = PathHelper::getInstance().getWritablePath();
+        //prepath.append("/");
+        prepath.append(_save);
+		if( FILE *fout = fopen(prepath.c_str(), "wb") ) {
 			fwrite(begin_ptr_, 1, length, fout);
 			fclose(fout);
 			//printf("binary stream saved to %s\n", _save.c_str());
