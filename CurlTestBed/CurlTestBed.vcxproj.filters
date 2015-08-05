@@ -37,6 +37,9 @@
     <Filter Include="SOURCE\synker\deps\xxhash">
       <UniqueIdentifier>{815dd806-4dd5-492b-8901-97a9fca0ccc0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SOURCE\synker\pathhelper">
+      <UniqueIdentifier>{2860fca4-f942-433a-a310-007c5792bc07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -86,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="synker\deps\xxhash\xxhash.c">
       <Filter>SOURCE\synker\deps\xxhash</Filter>
+    </ClCompile>
+    <ClCompile Include="synker\pathhelper\pathHelper.cc">
+      <Filter>SOURCE\synker\pathhelper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,5 +152,13 @@
     <ClInclude Include="synker\deps\xxhash\xxhash.h">
       <Filter>SOURCE\synker\deps\xxhash</Filter>
     </ClInclude>
+    <ClInclude Include="synker\pathhelper\PathHelper.h">
+      <Filter>SOURCE\synker\pathhelper</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="synker\pathhelper\PathHelper.mm">
+      <Filter>SOURCE\synker\pathhelper</Filter>
+    </None>
   </ItemGroup>
 </Project>

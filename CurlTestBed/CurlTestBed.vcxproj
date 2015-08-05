@@ -87,6 +87,7 @@
     <ClCompile Include="synker\fsm\PhaseMan.cc" />
     <ClCompile Include="synker\fsm\TaskMan.cc" />
     <ClCompile Include="synker\fsm\xxhashwrapper.cc" />
+    <ClCompile Include="synker\pathhelper\pathHelper.cc" />
     <ClCompile Include="synker\task\BinaryFileTask.cc" />
     <ClCompile Include="synker\task\BinaryStreamTask.cc" />
     <ClCompile Include="synker\task\PlainTextTask.cc" />
@@ -107,6 +108,7 @@
     <ClInclude Include="synker\fsm\TaskItemBase.h" />
     <ClInclude Include="synker\fsm\TaskMan.h" />
     <ClInclude Include="synker\fsm\xxhashwrapper.h" />
+    <ClInclude Include="synker\pathhelper\PathHelper.h" />
     <ClInclude Include="synker\task\BinaryFileTask.h" />
     <ClInclude Include="synker\task\BinaryStreamTask.h" />
     <ClInclude Include="synker\task\CurlWrapper.h" />
@@ -116,6 +118,11 @@
     <ClInclude Include="synker\thread\ThreadPool.h" />
     <ClInclude Include="synker\thread\Workload.h" />
     <ClInclude Include="synker\thread\WorkloadWrapper.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="synker\pathhelper\PathHelper.mm">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

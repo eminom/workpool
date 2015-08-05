@@ -16,7 +16,7 @@
 #include "thread/ThreadPool.h"
 #include "thread/Workload.h"
 #include "thread/WorkloadWrapper.h"
-
+#include "pathhelper/PathHelper.h"
 #include "deps/cJSON/cJSON.h"
 
 //#include "fsm/DownloadWork.h"
@@ -51,6 +51,8 @@ public:
 One one(101);
 
 int main(){
+	PathHelper::getInstance().makeSureCachePath();
+	PathHelper::getInstance().makeSureTargetPath();
 	//PrintThread();
 	PlainTextTask *ptt = new PlainTextTask("http://localhost:12000/version.php");
 	Assign(WorkloadWrapper::create([=]{
