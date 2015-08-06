@@ -57,7 +57,7 @@ void VerifyOneByOne(HotTaskItem *_pHot__, TaskMan *taskMan){
 	}));
 }
 
-void PhaseOne(const char *_versionCode__, const char *_baseServer__, const WhenFinish& done) {
+void PhaseOne(const char *_versionCode__, const char *_baseServer__, const WhenFinish& done, const WhenStep &step) {
 	char taskURI[BUFSIZ];
 	snprintf(taskURI, sizeof(taskURI), "%s/resfolder/hashv/%s.txt", _baseServer__, _versionCode__);
 	//~ And a new download is initiated. If so.
@@ -81,7 +81,7 @@ void PhaseOne(const char *_versionCode__, const char *_baseServer__, const WhenF
 			}
 		}
 		if( tc > 0 ){
-			TaskMan *taskMan = new TaskMan(done, MapInfo(ppt->getStr()));
+			TaskMan *taskMan = new TaskMan(done, step, MapInfo(ppt->getStr()));
 			taskMan->setTotalTask(tc);
 			for(const auto &line:rs) {
 				HotTaskItem item(line.c_str(), baseSvr);

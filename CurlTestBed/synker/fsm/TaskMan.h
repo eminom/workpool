@@ -11,7 +11,9 @@
 #include "MapInfo.h"
 
 typedef std::function<void()> WhenFinish;
+typedef std::function<void(float)> WhenStep;
 typedef const WhenFinish &WhenFinishProto;
+typedef const WhenStep &WhenStepProto;
 
 class TaskMan
 {
@@ -22,15 +24,18 @@ private:
 	}
 
 public:
-	TaskMan(WhenFinishProto handle, const MapInfo &mi)
+	TaskMan(WhenFinishProto handle, WhenStepProto step, const MapInfo &mi)
 		:doneHandle_(handle)
+		,stepHandle_(step)
 		,_mi(mi)
+		,_fullTaskCount(1)
 	{
 		_taskCount = 0;
 	}
 
 	void setTotalTask(int count) {
 		_taskCount = count;
+		_fullTaskCount = count > 0 ? count:1;
 	}
 
 	void notifyTaskFinish()	{
@@ -40,6 +45,9 @@ public:
 				//Deploy done.
 			}
 			doneHandle_();
+		} else {
+			float percent = (_fullTaskCount - _taskCount) / float(_fullTaskCount);
+			stepHandle_(percent);
 		}
 	}
 	
@@ -47,7 +55,9 @@ public:
 
 private:
 	const WhenFinish doneHandle_;
+	const WhenStep   stepHandle_;
 	std::atomic_int _taskCount;
+	int _fullTaskCount;
 	MapInfo _mi;
 	//std::mutex _mutex;
 

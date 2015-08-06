@@ -9,7 +9,7 @@
 
 void ScheduleDownload(HotTaskItem*, TaskMan *taskMan);
 void VerifyOneByOne(HotTaskItem *, TaskMan *taskMan);
-void PhaseOne(const char *versionCode, const char *baseServer, const WhenFinish&);
+void PhaseOne(const char *versionCode, const char *baseServer, const WhenFinish&, const WhenStep&);
 
 
 //SOME UTILS
