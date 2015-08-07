@@ -39,6 +39,7 @@ void DeployOneFile(const char *from, const char *to){
 #endif
 
 bool TaskMan::deploy() {
+	bool completed = true;
 	auto vs = XSplit(_mi.content(), [](char ch){return '\r'==ch || '\n'==ch;});
 	for(const auto&line:vs){
 		TaskItemBase item(line);
@@ -46,9 +47,12 @@ bool TaskMan::deploy() {
             std::string from = PathHelper::formatCachePath(&item);
             std::string to   = PathHelper::formatTargetPath(&item);
 			printf("<%s> => <%s>\n", from.c_str(), to.c_str());
-            PathHelper::getInstance().DeployOneFile(from.c_str(), to.c_str());
+            if(!PathHelper::getInstance().DeployOneFile(from.c_str(), to.c_str())){
+				completed = false;
+				break;
+			}
 		}
 	}
-	return true;
+	return completed;
 }
 
