@@ -10,7 +10,7 @@
 #include "HotTaskItem.h"
 #include "MapInfo.h"
 
-typedef std::function<bool()> WhenFinish;
+typedef std::function<bool(bool)> WhenFinish;
 typedef std::function<void(float)> WhenStep;
 typedef const WhenFinish &WhenFinishProto;
 typedef const WhenStep &WhenStepProto;
@@ -29,6 +29,7 @@ public:
 		,stepHandle_(step)
 		,_mi(mi)
 		,_fullTaskCount(1)
+		,_failCount(0)
 	{
 		_taskCount = 0;
 	}
@@ -38,13 +39,17 @@ public:
 		_fullTaskCount = count > 0 ? count:1;
 	}
 
-	void notifyTaskFinish()	{
+	void notifyTaskFinish(bool failed)	{
+		if(failed){
+			_failCount++;
+		}
 		_taskCount--;
 		if(0==_taskCount){
-			if(deploy()){
-				//Deploy done.
+			if(!_failCount){
+				doneHandle_(deploy());
+			} else {
+				doneHandle_(false);
 			}
-			doneHandle_();
 		} else {
 			float percent = (_fullTaskCount - _taskCount) / float(_fullTaskCount);
 			stepHandle_(percent);
@@ -58,6 +63,7 @@ private:
 	const WhenStep   stepHandle_;
 	std::atomic_int _taskCount;
 	int _fullTaskCount;
+	int _failCount;
 	MapInfo _mi;
 	//std::mutex _mutex;
 
