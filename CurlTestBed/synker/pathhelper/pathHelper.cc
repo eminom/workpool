@@ -59,6 +59,8 @@ void PathHelper::makeSureTargetPath()
 
 void PathHelper::print()
 {
+	printf("This is windows version.\n");
+	printf("Nothing curious about.\n");
 }
 
 const char* PathHelper::getCachePath(){
