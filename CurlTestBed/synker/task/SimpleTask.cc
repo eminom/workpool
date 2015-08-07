@@ -54,7 +54,9 @@ void SimpleTask::onFinalized(CURLcode res)
 
 long SimpleTask::timeout()
 {
-	return 300L;
+    //Refer to http://curl.haxx.se/libcurl/c/CURLOPT_CONNECTTIMEOUT.html
+    //Default is 300(seconds)
+	return 30L;
 }
 
 std::string SimpleTask::toStr()
