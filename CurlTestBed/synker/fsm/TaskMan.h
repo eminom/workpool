@@ -10,7 +10,7 @@
 #include "HotTaskItem.h"
 #include "MapInfo.h"
 
-typedef std::function<void()> WhenFinish;
+typedef std::function<bool()> WhenFinish;
 typedef std::function<void(float)> WhenStep;
 typedef const WhenFinish &WhenFinishProto;
 typedef const WhenStep &WhenStepProto;
