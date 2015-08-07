@@ -36,6 +36,7 @@ void ScheduleDownload(HotTaskIn *_pHot__, TaskMan *taskMan) {
 		printf("Download <%s> failed.\n", pHotInfo->relatePath());
 		pHotInfo->incFail();
 		if(pHotInfo->failCount() > _MaxFailPerItem){
+			printf("Download <%s> failed. Aborted.\n", pHotInfo->relatePath());
 			taskMan->notifyTaskFinish(true);//Too many failure for download.
 		} else {
 			ScheduleDownload(pHotInfo, taskMan);
@@ -63,6 +64,7 @@ void VerifyOneByOne(HotTaskIn *_pHot__, TaskMan *taskMan){
 		printf("Verification failure for <%s>\n", pHotInfo->relatePath());
 		pHotInfo->incFail();
 		if(pHotInfo->failCount() > _MaxFailPerItem){
+			printf("Verification for <%s> failed. Aborted.\n", pHotInfo->relatePath());
 			taskMan->notifyTaskFinish(true);	//~Verification failure:(Same as download failure)
 		} else {
 			ScheduleDownload(pHotInfo, taskMan);
