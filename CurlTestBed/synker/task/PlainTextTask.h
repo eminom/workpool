@@ -10,12 +10,12 @@ class PlainTextTask:public SimpleTask
 {
 private:	
 	virtual size_t writeFunc(void *ptr, size_t size, size_t nmemb)override;
-	virtual const char *taskUrl()override;
 
 public:
 	PlainTextTask(const char *url);
 
 public:
+	virtual const char *taskUrl()override;
 	virtual void onPrepare()override;
 	//virtual void onFinalized(CURLcode res)override;
 	virtual std::string toStr();
