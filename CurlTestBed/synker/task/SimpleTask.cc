@@ -30,6 +30,16 @@ int SimpleTask::perform()
 	curl_easy_setopt(curl, CURLOPT_LOW_SPEED_LIMIT, 1);	// Options from Cocos2d-X
 	curl_easy_setopt(curl, CURLOPT_LOW_SPEED_TIME, 5);
 	curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1 );
+
+	const char *bodyStr = bodyForPostData();
+	if(bodyStr && strlen(bodyStr) > 0)
+	{
+		//~Now we specify we want a post request.
+		//:>>  http://curl.haxx.se/libcurl/c/post-callback.html
+		curl_easy_setopt(curl, CURLOPT_POST, 1L);
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, bodyStr);
+	}
+
 	CURLcode res = curl_easy_perform(curl);
 	onFinalized(res);
 	lastCode_ = res;
@@ -57,6 +67,11 @@ long SimpleTask::timeout()
     //Refer to http://curl.haxx.se/libcurl/c/CURLOPT_CONNECTTIMEOUT.html
     //Default is 300(seconds)
 	return 30L;
+}
+
+const char *SimpleTask::bodyForPostData()
+{
+	return "";
 }
 
 std::string SimpleTask::toStr()

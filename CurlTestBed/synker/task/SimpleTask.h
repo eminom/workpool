@@ -12,6 +12,7 @@ class SimpleTask
 private:
 	virtual size_t writeFunc(void *ptr, size_t size, size_t nmemb) = 0;
 	virtual long timeout();
+	virtual const char *bodyForPostData();
 
 private:
 	static size_t doWriteFunc(void *ptr, size_t size, size_t nmemb, void *userdata);
