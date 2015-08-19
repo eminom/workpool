@@ -11,7 +11,7 @@ public:
 	BinaryStreamPostTask(const char *url, const char *body);
 
 private:
-	virtual const char *bodyForPostData()override;
+	virtual const char *bodyForPostData()final;
 
 private:
 	std::string dataBody_;
