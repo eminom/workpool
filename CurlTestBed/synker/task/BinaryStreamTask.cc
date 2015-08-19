@@ -63,3 +63,15 @@ int BinaryStreamTask::length()const{
 const char* BinaryStreamTask::data()const{
 	return begin_ptr_;
 }
+
+void BinaryStreamTask::saveToPath(const char *path)
+{
+	int length = write_ptr_ - begin_ptr_;
+	if( FILE *fout = fopen(path, "wb") ) {
+		fwrite(begin_ptr_, 1, length, fout);
+		fclose(fout);
+		//printf("binary stream saved to %s\n", _save.c_str());
+	} else {
+		fprintf(stderr, "Failed to open %s\n", path);
+	}
+}

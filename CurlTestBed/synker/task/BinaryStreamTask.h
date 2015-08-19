@@ -17,6 +17,7 @@ public:
 	virtual const char *taskUrl()override;
 	int length()const;
 	const char *data()const;
+	void saveToPath(const char *path);
 
 private:
 	void realloc(int size);
