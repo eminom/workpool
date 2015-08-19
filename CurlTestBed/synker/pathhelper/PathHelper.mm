@@ -83,8 +83,7 @@ std::string PathHelper::formatResourceUri(HotTaskItem *pItem){
     return taskURL;
 }
 
-
-void PathHelper::DeployOneFile(const char *from, const char *to){
+bool PathHelper::DeployOneFile(const char *from, const char *to){
     std::string pre = PathHelper::getInstance().getWritablePath();
     std::string source = pre + from;
     std::string target = pre + to;
@@ -96,10 +95,25 @@ void PathHelper::DeployOneFile(const char *from, const char *to){
         [[NSFileManager defaultManager]createDirectoryAtPath:sub withIntermediateDirectories:YES attributes:nil error:nil];
     }
     
-    
     NSString *src = [NSString stringWithUTF8String:source.c_str()];
     NSString *dst = [NSString stringWithUTF8String:target.c_str()];
-    [[NSFileManager defaultManager] copyItemAtPath:src toPath:dst error:nil];
+    
+    NSFileManager *f_man = [NSFileManager defaultManager];
+    if( [f_man contentsEqualAtPath:src andPath:dst] ){
+        //NSLog(@"Equal, skip, deploy already done.");
+        return true;
+    }
+    if( [f_man fileExistsAtPath:dst] ){
+        //Need to remove the old one first.
+        [f_man removeItemAtPath:dst error:nil];
+    }
+    
+    NSError *error = nil;
+    if( ! [f_man copyItemAtPath:src toPath:dst error:&error] ){
+        NSLog(@"Copying %@ failed due to %@", dst, error);
+		return false;//Copying failed.
+    }
+	return true;
 }
-     
+
 

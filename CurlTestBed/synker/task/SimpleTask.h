@@ -11,7 +11,6 @@ class SimpleTask
 {
 private:
 	virtual size_t writeFunc(void *ptr, size_t size, size_t nmemb) = 0;
-	virtual const char* taskUrl() = 0;
 	virtual long timeout();
 
 private:
@@ -27,6 +26,7 @@ public:
 	virtual std::string toStr();
 	CURLcode getLastCode();
     virtual ~SimpleTask() = 0;
+	virtual const char* taskUrl() = 0;
 
 protected:
 	SimpleTask();

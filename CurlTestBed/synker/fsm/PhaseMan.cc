@@ -14,11 +14,12 @@
 #include "MapInfo.h"
 #include <cstdlib>
 
+#define _MaxFailPerItem 5
 
-void ScheduleDownload(HotTaskItem *_pHot__, TaskMan *taskMan) {
+void ScheduleDownload(HotTaskIn *_pHot__, TaskMan *taskMan) {
     std::string taskURL = PathHelper::formatResourceUri(_pHot__);
     std::string savePath = PathHelper::formatCachePath(_pHot__);
-	auto pHotInfo = new HotTaskItem(*_pHot__);
+	auto pHotInfo = new HotTaskIn(*_pHot__);
 	char* pSave = strdup(savePath.c_str());
 	SimpleTask* pTask = new BinaryFileTask(taskURL.c_str(), pSave);
 	Assign(WorkloadWrapper::create([=]{
@@ -32,12 +33,19 @@ void ScheduleDownload(HotTaskItem *_pHot__, TaskMan *taskMan) {
 		VerifyOneByOne(pHotInfo, taskMan);
 	}, [=] {
 		// If failed , schedule again. 
-		ScheduleDownload(pHotInfo, taskMan);
+		printf("Download <%s> failed.\n", pHotInfo->relatePath());
+		pHotInfo->incFail();
+		if(pHotInfo->failCount() > _MaxFailPerItem){
+			printf("Download <%s> failed. Aborted.\n", pHotInfo->relatePath());
+			taskMan->notifyTaskFinish(true);//Too many failure for download.
+		} else {
+			ScheduleDownload(pHotInfo, taskMan);
+		}
 	}));
 }
 
-void VerifyOneByOne(HotTaskItem *_pHot__, TaskMan *taskMan){
-	HotTaskItem *pHotInfo = new HotTaskItem(*_pHot__);
+void VerifyOneByOne(HotTaskIn *_pHot__, TaskMan *taskMan){
+	HotTaskIn *pHotInfo = new HotTaskIn(*_pHot__);
 	Assign(WorkloadWrapper::create([=]{
         std::string cache_file_path = PathHelper::formatCachePath(pHotInfo);
         std::string cache_file_abs = PathHelper::getInstance().getWritablePath() + cache_file_path;
@@ -50,14 +58,21 @@ void VerifyOneByOne(HotTaskItem *_pHot__, TaskMan *taskMan){
 		delete pHotInfo;
 	}, [=]{
 		printf("Verifying of \"%s\" is success !\n", pHotInfo->relatePath());
-		taskMan->notifyTaskFinish();
+		taskMan->notifyTaskFinish(false);//Notify verification success
 	}, [=]{
 		//~Failed, 
-		ScheduleDownload(pHotInfo, taskMan);
+		printf("Verification failure for <%s>\n", pHotInfo->relatePath());
+		pHotInfo->incFail();
+		if(pHotInfo->failCount() > _MaxFailPerItem){
+			printf("Verification for <%s> failed. Aborted.\n", pHotInfo->relatePath());
+			taskMan->notifyTaskFinish(true);	//~Verification failure:(Same as download failure)
+		} else {
+			ScheduleDownload(pHotInfo, taskMan);
+		}
 	}));
 }
 
-void PhaseOne(const char *_versionCode__, const char *_baseServer__, const WhenFinish& done) {
+void PhaseOne(const char *_versionCode__, const char *_baseServer__, const WhenFinish& done, const WhenStep &step) {
 	char taskURI[BUFSIZ];
 	snprintf(taskURI, sizeof(taskURI), "%s/resfolder/hashv/%s.txt", _baseServer__, _versionCode__);
 	//~ And a new download is initiated. If so.
@@ -75,16 +90,16 @@ void PhaseOne(const char *_versionCode__, const char *_baseServer__, const WhenF
 		//Statistics of the current batch work
 		int tc = 0;
 		for(const auto &line:rs) {
-			HotTaskItem item(line.c_str(), baseSvr);
+			TaskItemBase item(line.c_str());
 			if(item){
 				++tc;
 			}
 		}
 		if( tc > 0 ){
-			TaskMan *taskMan = new TaskMan(done, MapInfo(ppt->getStr()));
+			TaskMan *taskMan = new TaskMan(done, step, MapInfo(ppt->getStr()));
 			taskMan->setTotalTask(tc);
 			for(const auto &line:rs) {
-				HotTaskItem item(line.c_str(), baseSvr);
+				HotTaskIn item(line.c_str(), baseSvr);
 				if(item){
 					VerifyOneByOne(&item, taskMan);
 				}

@@ -20,7 +20,7 @@ public:
     void makeSureTargetPath();
     void print();
     std::string getWritablePath();
-    void DeployOneFile(const char *from, const char *to);
+    bool DeployOneFile(const char *from, const char *to);
     
 public:
     static const char* getCachePath();

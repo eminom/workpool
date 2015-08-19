@@ -59,6 +59,8 @@ void PathHelper::makeSureTargetPath()
 
 void PathHelper::print()
 {
+	printf("This is windows version.\n");
+	printf("Nothing curious about.\n");
 }
 
 const char* PathHelper::getCachePath(){
@@ -88,7 +90,7 @@ std::string PathHelper::formatResourceUri(HotTaskItem *pItem){
 }
 
 
-void PathHelper::DeployOneFile(const char *from, const char *to){
+bool PathHelper::DeployOneFile(const char *from, const char *to){
     std::string pre = PathHelper::getInstance().getWritablePath();
     std::string source = pre + from;
     std::string target = pre + to;
@@ -97,7 +99,7 @@ void PathHelper::DeployOneFile(const char *from, const char *to){
         std::string subdir = target.substr(0, pos);
 		create_path(subdir);
     }
-	CopyFileA(source.c_str(), target.c_str(), FALSE);
+	return !!CopyFileA(source.c_str(), target.c_str(), FALSE);
 }
      
 
