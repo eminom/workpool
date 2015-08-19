@@ -15,6 +15,8 @@ public:
 public:
 	virtual size_t writeFunc(void *ptr, size_t sz, size_t nmemb)override;
 	virtual const char *taskUrl()override;
+	int length()const;
+	const char *data()const;
 
 private:
 	void realloc(int size);

@@ -54,3 +54,12 @@ void BinaryStreamTask::cleanup() {
 	free(begin_ptr_);
 	begin_ptr_ = end_ptr_ = write_ptr_ = nullptr;
 }
+
+
+int BinaryStreamTask::length()const{
+	return write_ptr_ - begin_ptr_;
+}
+
+const char* BinaryStreamTask::data()const{
+	return begin_ptr_;
+}
