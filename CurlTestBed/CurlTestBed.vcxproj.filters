@@ -90,7 +90,7 @@
     <ClCompile Include="synker\deps\xxhash\xxhash.c">
       <Filter>SOURCE\synker\deps\xxhash</Filter>
     </ClCompile>
-    <ClCompile Include="synker\pathhelper\pathHelper.cc">
+    <ClCompile Include="synker\pathhelper\PathHelper.cc">
       <Filter>SOURCE\synker\pathhelper</Filter>
     </ClCompile>
   </ItemGroup>

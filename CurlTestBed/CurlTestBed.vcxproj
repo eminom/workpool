@@ -87,7 +87,7 @@
     <ClCompile Include="synker\fsm\PhaseMan.cc" />
     <ClCompile Include="synker\fsm\TaskMan.cc" />
     <ClCompile Include="synker\fsm\xxhashwrapper.cc" />
-    <ClCompile Include="synker\pathhelper\pathHelper.cc" />
+    <ClCompile Include="synker\pathhelper\PathHelper.cc" />
     <ClCompile Include="synker\task\BinaryFileTask.cc" />
     <ClCompile Include="synker\task\BinaryStreamTask.cc" />
     <ClCompile Include="synker\task\PlainTextTask.cc" />
