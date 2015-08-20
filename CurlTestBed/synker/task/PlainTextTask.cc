@@ -43,7 +43,7 @@ std::string PlainTextTask::toStr()
 	return buf;
 }
 
-std::string PlainTextTask::getStr()
+const std::string& PlainTextTask::getStr()const
 {
 	return _chunk;
 }
