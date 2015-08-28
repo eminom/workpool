@@ -2,7 +2,7 @@
 
 #include "PlainTextPostTask.h"
 
-PlainTextPostTask::PlainTextPostTask(const char *url, const char *body)
+PlainTextPostTask::PlainTextPostTask(const std::string &url, const char *body)
 	:PlainTextTask(url)
 	,dataBody_(body)
 {

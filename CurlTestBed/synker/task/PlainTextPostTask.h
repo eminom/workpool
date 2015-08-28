@@ -8,7 +8,7 @@
 class PlainTextPostTask:public PlainTextTask
 {
 public:
-	PlainTextPostTask(const char *url, const char *body);
+	PlainTextPostTask(const std::string &url, const char *body);
 
 private:
 	virtual const char *bodyForPostData()override;

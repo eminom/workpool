@@ -12,7 +12,7 @@ private:
 	virtual size_t writeFunc(void *ptr, size_t size, size_t nmemb)override;
 
 public:
-	PlainTextTask(const char *url);
+	PlainTextTask(const std::string &url);
 
 public:
 	virtual const char *taskUrl()override;

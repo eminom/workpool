@@ -3,7 +3,7 @@
 #include "PlainTextTask.h"
 #include "base/EmComm.h"
 
-PlainTextTask::PlainTextTask(const char *url)
+PlainTextTask::PlainTextTask(const std::string &url)
 	:_taskUrl(url)
 {
 
