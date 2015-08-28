@@ -19,7 +19,7 @@ private:
 
 protected:
 	virtual void onPrepare();
-	virtual void onFinalized(CURLcode res);
+	virtual void onFinalized(CURLcode res, long statusCode);
 
 public:
 	//Static should not change over time.

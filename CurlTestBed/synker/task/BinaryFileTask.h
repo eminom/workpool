@@ -9,7 +9,7 @@ class BinaryFileTask:public BinaryStreamTask
 public:
 	BinaryFileTask(const char *url, const char *save, int cap=1024);
 
-	virtual void onFinalized(CURLcode res)override;
+	virtual void onFinalized(CURLcode res, long statusCode)override;
 	virtual std::string toStr()override;
 
 private:

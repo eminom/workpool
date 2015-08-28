@@ -9,9 +9,9 @@ BinaryFileTask::BinaryFileTask(const char *url, const char *save, int cap)
 
 }
 
-void BinaryFileTask::onFinalized(CURLcode res) {
-	BinaryStreamTask::onFinalized(res);
-	if(0==res) {
+void BinaryFileTask::onFinalized(CURLcode res, long statusCode) {
+	BinaryStreamTask::onFinalized(res, statusCode);
+	if(0==res && 2 == (statusCode/100)) {
         //----- NEED THE ABSOLUTE PATH NOW.
         std::string prepath = PathHelper::getInstance().getWritablePath();
         //prepath.append("/");

@@ -41,7 +41,11 @@ int SimpleTask::perform()
 	}
 
 	CURLcode res = curl_easy_perform(curl);
-	onFinalized(res);
+
+	//Finally. done.
+	long statusCode = 0;
+	curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &statusCode);
+	onFinalized(res, statusCode);
 	lastCode_ = res;
 	return res;
 }
@@ -50,15 +54,22 @@ void SimpleTask::onPrepare()
 {
 }
 
-void SimpleTask::onFinalized(CURLcode res)
+void SimpleTask::onFinalized(CURLcode res, long statusCode)
 {
 	if (res != 0)
 	{
-		printf("[FAILED]\n");
+		printf("[FAILED] Task incompleted.\n");
 	}
 	else
 	{
-		printf("[OK]\n");
+		if(statusCode/100 != 2)
+		{
+			printf("[Failed: Http response with error] -> %d\n", statusCode);
+		} 
+		else
+		{
+			printf("[OK] -> %d\n", statusCode);
+		}
 	}
 }
 
