@@ -17,11 +17,11 @@
 #define _MaxFailPerItem 5
 
 void ScheduleDownload(HotTaskIn *_pHot__, TaskMan *taskMan) {
-    std::string taskURL = PathHelper::formatResourceUri(_pHot__);
-    std::string savePath = PathHelper::formatCachePath(_pHot__);
+    std::string __taskURL__ = PathHelper::formatResourceUri(_pHot__);
+    std::string __savePath__ = PathHelper::formatCachePath(_pHot__);
 	auto pHotInfo = new HotTaskIn(*_pHot__);
-	char* pSave = strdup(savePath.c_str());
-	SimpleTask* pTask = new BinaryFileTask(taskURL.c_str(), pSave);
+	char* pSave = strdup(__savePath__.c_str());
+	SimpleTask* pTask = new BinaryFileTask(__taskURL__.c_str(), pSave);
 	Assign(WorkloadWrapper::create([=]{
 		return pTask->perform();
 	}, [=] {
