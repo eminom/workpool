@@ -8,7 +8,7 @@
 class BinaryStreamPostTask:public BinaryStreamTask
 {
 public:
-	BinaryStreamPostTask(const char *url, const char *body);
+	BinaryStreamPostTask(const std::string &url, const std::string &body);
 
 private:
 	virtual const char *bodyForPostData()final;

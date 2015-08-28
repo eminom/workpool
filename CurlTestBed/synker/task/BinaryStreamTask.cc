@@ -2,7 +2,7 @@
 #include "BinaryStreamTask.h"
 #include <cstdlib>
 
-BinaryStreamTask::BinaryStreamTask(const char *url, int capacity)
+BinaryStreamTask::BinaryStreamTask(const std::string &url, int capacity)
 	:begin_ptr_(nullptr),
 	end_ptr_(nullptr),
 	write_ptr_(nullptr),

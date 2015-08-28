@@ -2,7 +2,7 @@
 
 #include "BinaryStreamPostTask.h"
 
-BinaryStreamPostTask::BinaryStreamPostTask(const char *url, const char *body)
+BinaryStreamPostTask::BinaryStreamPostTask(const std::string &url, const std::string &body)
 	:BinaryStreamTask(url)
 	,dataBody_(body)
 {

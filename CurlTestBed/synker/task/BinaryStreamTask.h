@@ -9,7 +9,7 @@
 class BinaryStreamTask:public SimpleTask
 {
 public:
-	BinaryStreamTask(const char *url, int capacity = 1024);
+	BinaryStreamTask(const std::string &url, int capacity = 1024);
 	~BinaryStreamTask();
 
 public:
