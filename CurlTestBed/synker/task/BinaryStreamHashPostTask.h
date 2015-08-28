@@ -8,7 +8,7 @@
 class BinaryStreamHashPostTask:public BinaryStreamPostTask
 {
 public:
-	BinaryStreamHashPostTask(const std::string &url, const std::string &body, const char *hash);
+	BinaryStreamHashPostTask(const std::string &url, const std::string &body, const std::string &hash);
 	const char *hash()const;
 
 private:

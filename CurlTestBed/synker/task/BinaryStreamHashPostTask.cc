@@ -2,7 +2,7 @@
 
 #include "BinaryStreamHashPostTask.h"
 
-BinaryStreamHashPostTask::BinaryStreamHashPostTask(const std::string &url, const std::string &body, const char *hash)
+BinaryStreamHashPostTask::BinaryStreamHashPostTask(const std::string &url, const std::string &body, const std::string &hash)
 	:BinaryStreamPostTask(url, body)
 	,strHash_(hash)
 {
