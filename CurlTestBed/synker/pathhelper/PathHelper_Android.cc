@@ -29,6 +29,8 @@
 #define  CLASS_NAME "org/cocos2dx/lib/Cocos2dxHelper"
 //~ cocos2d-x copied ends.
 
+using namespace cocos2d;
+
 //Only for this file.(Copied from cocos2d-x)
 static std::string getFileDirectoryJNI() {
     JniMethodInfo t;
