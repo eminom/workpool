@@ -11,28 +11,22 @@
 //////////////////////////////////////////
 //~ Heder copied from cocos2d-x Starts
 #include <string>
-
 #include <stdlib.h>
 #include <jni.h>
 #include <android/log.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <fcntl.h>  // For O_WXXX
+#include <fcntl.h>
 #include <unistd.h>
 #include "platform/android/jni/JniHelper.h" 
-//#include "android/asset_manager_jni.h"
-//#include "deprecated/CCString.h"
-//#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
-//#include "base/ccUTF8.h"
-#define  LOG_TAG    "Java_org_cocos2dx_lib_Cocos2dxHelper.cpp"
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
+#define  LOG_TAG    "PathHelper"
+#define  LOGW(...)  __android_log_print(ANDROID_LOG_WARN, LOG_TAG,__VA_ARGS__)
 #define  CLASS_NAME "org/cocos2dx/lib/Cocos2dxHelper"
 //~ cocos2d-x copied ends.
-
 using namespace cocos2d;
 
 //Only for this file.(Copied from cocos2d-x)
-static std::string getFileDirectoryJNI() {
+static std::string _getFileDirectoryJNI() {
     JniMethodInfo t;
     std::string ret("");
 
@@ -61,7 +55,12 @@ PathHelper& PathHelper::getInstance()
 std::string PathHelper::getWritablePath()
 {
 	//~ Delegate to cocos2d-X
-	return getFileDirectoryJNI();
+	std::string rv = _getFileDirectoryJNI();
+	if(rv.size() > 0 && rv[rv.size()-1] != '/')
+	{
+		rv += "/";
+	}
+	return rv;
 }
 
 void create_path(const std::string& target)
@@ -86,7 +85,8 @@ void create_path(const std::string& target)
 		//printf("<%s>\n", buf);
 		nx = strchr(nx+1, '/');
 		mkdir(buf, 0777);
-		if(access(buf, 0)) {
+		if(access(buf, 0)) 
+		{
 			printf("Failed to create chain <%s>\n", target.c_str());
 			break;
 		}
@@ -110,8 +110,10 @@ void PathHelper::makeSureTargetPath()
 
 void PathHelper::print()
 {
-	printf("This is windows version.\n");
-	printf("Nothing curious about.\n");
+	//printf("This is windows version.\n");
+	//printf("Nothing curious about.\n");
+	//LOGW("This is Android version for PathHelper");
+	//LOGW("Nothing new today.");
 }
 
 const char* PathHelper::getCachePath(){
@@ -165,6 +167,7 @@ bool copyFile(const char *from, const char *to)
 		ssize_t writeC = write(ofd, buf, readC); //~ Dont care how many bytes are written.
 		if(writeC!=readC)
 		{
+			LOGW("write failed. Site A100");
 			rv = false;
 			break;
 		}
@@ -179,7 +182,8 @@ bool PathHelper::DeployOneFile(const char *from, const char *to){
     std::string source = pre + from;
     std::string target = pre + to;
     auto pos = target.rfind("/");
-    if(pos!=std::string::npos){
+    if(pos!=std::string::npos)
+	{
         std::string subdir = target.substr(0, pos);
 		create_path(subdir);
     }

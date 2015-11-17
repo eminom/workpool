@@ -1,6 +1,7 @@
 
 #include "DownloadWork.h"
 #include "task/SimpleTask.h"
+#include "base/LogComm.h"
 
 DownloadWork::~DownloadWork(){
 	delete _task;
@@ -18,12 +19,12 @@ void DownloadWork::execute()
 
 void DownloadWork::finish()
 {
-	printf("%s is finished.\n", _task->toStr().c_str());
+	LOGW("%s is finished.\n", _task->toStr().c_str());
 	delete this;
 }
 
 void DownloadWork::cancel()
 {
-	printf("%s is canceled.\n", _task->toStr().c_str());
+	LOGW("%s is canceled.\n", _task->toStr().c_str());
 	delete this;
 }

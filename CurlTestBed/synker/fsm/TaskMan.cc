@@ -7,12 +7,14 @@
 #include <cstdlib>
 
 #include "pathhelper/PathHelper.h"
-
+#include "base/LogComm.h"
+/*
 #ifdef _MSC_VER
 
 #include <windows.h>
 #include <shlobj.h>
 
+/*
 void DeployOneFile(const char *from, const char *to){
 	const char* rh = strrchr(to, '/');
 	if(rh){
@@ -37,6 +39,7 @@ void DeployOneFile(const char *from, const char *to){
 #else
 
 #endif
+*/
 
 bool TaskMan::deploy() {
 	bool completed = true;
@@ -46,7 +49,7 @@ bool TaskMan::deploy() {
 		if(item){
             std::string from = PathHelper::formatCachePath(&item);
             std::string to   = PathHelper::formatTargetPath(&item);
-			printf("<%s> => <%s>\n", from.c_str(), to.c_str());
+			LOGW("<%s> => <%s>\n", from.c_str(), to.c_str());
             if(!PathHelper::getInstance().DeployOneFile(from.c_str(), to.c_str())){
 				completed = false;
 				break;

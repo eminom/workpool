@@ -13,6 +13,7 @@
 #include "xxhashwrapper.h"
 #include "MapInfo.h"
 #include <cstdlib>
+#include "base/LogComm.h"
 
 #define _MaxFailPerItem 5
 
@@ -33,10 +34,10 @@ void ScheduleDownload(HotTaskIn *_pHot__, TaskMan *taskMan) {
 		VerifyOneByOne(pHotInfo, taskMan);
 	}, [=] {
 		// If failed , schedule again. 
-		printf("Download <%s> failed.\n", pHotInfo->relatePath());
+		LOGW("Download <%s> failed.\n", pHotInfo->relatePath());
 		pHotInfo->incFail();
 		if(pHotInfo->failCount() > _MaxFailPerItem){
-			printf("Download <%s> failed. Aborted.\n", pHotInfo->relatePath());
+			LOGW("Download <%s> failed. Aborted.\n", pHotInfo->relatePath());
 			taskMan->notifyTaskFinish(true);//Too many failure for download.
 		} else {
 			ScheduleDownload(pHotInfo, taskMan);
@@ -52,19 +53,19 @@ void VerifyOneByOne(HotTaskIn *_pHot__, TaskMan *taskMan){
 		unsigned int hex = calculateFileXXHASH(cache_file_abs.c_str());
 		char buf[32];
 		snprintf(buf, sizeof(buf), "%08x", hex);
-		//printf("Verifying %s to %s...\n", pHotInfo->xxHashStr(), buf);
+		LOGW("Verifying <%s> with <%s>\n", pHotInfo->xxHashStr(), buf);
 		return strcmp(buf, pHotInfo->xxHashStr());
 	}, [=]{
 		delete pHotInfo;
 	}, [=]{
-		printf("Verifying of \"%s\" is success !\n", pHotInfo->relatePath());
+		LOGW("Verifying of \"%s\" is success !\n", pHotInfo->relatePath());
 		taskMan->notifyTaskFinish(false);//Notify verification success
 	}, [=]{
 		//~Failed, 
-		printf("Verification failure for <%s>\n", pHotInfo->relatePath());
+		LOGW("Verification failure for <%s>\n", pHotInfo->relatePath());
 		pHotInfo->incFail();
 		if(pHotInfo->failCount() > _MaxFailPerItem){
-			printf("Verification for <%s> failed. Aborted.\n", pHotInfo->relatePath());
+			LOGW("Verification for <%s> failed. Aborted.\n", pHotInfo->relatePath());
 			taskMan->notifyTaskFinish(true);	//~Verification failure:(Same as download failure)
 		} else {
 			ScheduleDownload(pHotInfo, taskMan);
@@ -107,6 +108,6 @@ void PhaseOne(const char *_versionCode__, const char *_baseServer__, const WhenF
 			printf("Work assigned.\n");
 		}
 	},[=]{
-		printf("Parsing failed.\n");
+		LOGW("Parsing failed.\n");
 	}));
 }
