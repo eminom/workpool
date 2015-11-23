@@ -25,6 +25,9 @@ LOCAL_SRC_FILES := \
 ../thread/ThreadPool.cc \
 ../thread/Workload.cc \
 ../thread/WorkloadWrapper.cc \
+../deps/sha1/sha1.cpp \
+../deps/cJSON/cJSON.c \
+../deps/xxhash/xxhash.c
 
 # LOCAL_STATIC_LIBRARIES += libxx
 
