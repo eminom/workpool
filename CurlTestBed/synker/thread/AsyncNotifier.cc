@@ -1,7 +1,7 @@
 
 #include "AsyncNotifier.h"
 
-AsyncNotifier *_instance;
+static AsyncNotifier *_instance;
 
 AsyncNotifier::AsyncNotifier()
 {
