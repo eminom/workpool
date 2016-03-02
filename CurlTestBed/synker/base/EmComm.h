@@ -5,6 +5,7 @@
 
 #ifdef _MSC_VER
 #define snprintf	sprintf_s
+#define strdup		_strdup
 #endif
 
 

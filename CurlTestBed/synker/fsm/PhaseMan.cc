@@ -14,7 +14,7 @@
 #include "MapInfo.h"
 #include <cstdlib>
 #include "base/LogComm.h"
-
+#include "base/EmComm.h"
 #define _MaxFailPerItem 5
 
 void ScheduleDownload(HotTaskIn *_pHot__, TaskMan *taskMan) {
