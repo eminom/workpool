@@ -10,8 +10,13 @@
 
 void ScheduleDownload(HotTaskIn*, TaskMan *taskMan);
 void VerifyOneByOne(HotTaskIn *, TaskMan *taskMan);
-void PhaseOne(const char *versionCode, const char *baseServer, const WhenFinish&, const WhenStep&);
 
+
+//~ versionCode, baseServer, whenFinish, whenStep
+//~ run in context of main thread.
+typedef std::function<void(const char*, const char*, const WhenFinish&, const WhenStep&)> PhaseHandler;
+extern const PhaseHandler PhaseOne;
+extern const PhaseHandler PhaseOfClean;
 
 //SOME UTILS
 #define Assign(...)	ThreadPool::getInstance()->assign(__VA_ARGS__)

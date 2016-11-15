@@ -9,6 +9,7 @@
 #include <vector>
 #include <string>
 #include <functional>
+#include <map>
 
 #include "xxhashwrapper.h"
 #include "MapInfo.h"
@@ -73,41 +74,99 @@ void VerifyOneByOne(HotTaskIn *_pHot__, TaskMan *taskMan){
 	}));
 }
 
-void PhaseOne(const char *_versionCode__, const char *_baseServer__, const WhenFinish& done, const WhenStep &step) {
+//~ For the main thread context:
+void _ProcessWithPPT(const std::string &textContent, const char *baseSvr, const WhenFinish &done, const WhenStep &step) {
+	auto rs = XSplit(textContent, [](char ch) {return '\r' == ch || '\n' == ch; });
+	//printf("Line count is %d\n", rs.size());
+	//Statistics of the current batch work
+	int tc = 0;
+	for (const auto &line : rs) {
+		TaskItemBase item(line.c_str());
+		if (item) {
+			++tc;
+		}
+	}
+	if (tc > 0) {
+		TaskMan *taskMan = new TaskMan(done, step, MapInfo(textContent));
+		taskMan->setTotalTask(tc);
+		for (const auto &line : rs) {
+			HotTaskIn item(line.c_str(), baseSvr);
+			if (item) {
+				VerifyOneByOne(&item, taskMan);
+			}
+		}
+		printf("Work assigned.\n");
+	}
+}
+
+//~ For the main thread context:
+void _ProcessWithClean(const std::string &textContext, const char *baseSvr, const WhenFinish &done, const WhenStep &step) {
+	auto rs = XSplit(textContext, [](char ch) {return '\r' == ch || '\n' == ch; });
+	std::map<std::string, TaskItemBase> dc;
+	for (const auto &line : rs) {
+		TaskItemBase item(line.c_str());
+		if (item) {
+			dc.insert(std::make_pair(item.relatePath(), item));
+		}
+	}
+	std::list<std::string> toDelete;
+	PathHelper::iterateTargetPath([&dc, &toDelete](const std::string &relate, const std::string&fullpath){
+		bool inThisVersion = (dc.find(relate) != dc.end());
+		//printf("<%s>:<%s>\n", fullpath.c_str(), (inThisVersion?"Yes":"No"));
+		if (!inThisVersion) {
+			printf("<%s>:<%s>\n", relate.c_str(), (inThisVersion ? "Yes" : "No"));
+			toDelete.push_back(relate);
+		}
+	});
+	for (auto it = toDelete.begin(); it != toDelete.end(); ++it) {
+		printf("Deleting %s ......", it->c_str());
+		if (PathHelper::DeleteOneFile(*it)) {
+			printf("OK\n");
+		} else {
+			printf("Failed\n");
+		}
+	}
+	done(true);
+}
+
+typedef std::function<void(const std::string&, const char *, const WhenFinish&, const WhenStep&)> PhasePostHandler;
+void PhaseOneProtoFunc(
+		const PhasePostHandler& postHandler,
+		const char *_versionCode__, const char *_baseServer__,
+		const WhenFinish &done, const WhenStep &step) { 
 	char taskURI[BUFSIZ];
 	snprintf(taskURI, sizeof(taskURI), "%s/resfolder/hashv/%s.txt", _baseServer__, _versionCode__);
 	//~ And a new download is initiated. If so.
-	
 	PlainTextTask *ppt = new PlainTextTask(taskURI);
 	char *baseSvr = strdup(_baseServer__);
 	Assign(WorkloadWrapper::create([=]{
 		return ppt->perform();
-	},[=]{
+	}, [=] {
 		delete ppt;
 		free(baseSvr);
-	},[=]{
-		auto rs = XSplit(ppt->getStr(), [](char ch){return '\r'==ch || '\n'==ch;});
-		//printf("Line count is %d\n", rs.size());
-		//Statistics of the current batch work
-		int tc = 0;
-		for(const auto &line:rs) {
-			TaskItemBase item(line.c_str());
-			if(item){
-				++tc;
-			}
-		}
-		if( tc > 0 ){
-			TaskMan *taskMan = new TaskMan(done, step, MapInfo(ppt->getStr()));
-			taskMan->setTotalTask(tc);
-			for(const auto &line:rs) {
-				HotTaskIn item(line.c_str(), baseSvr);
-				if(item){
-					VerifyOneByOne(&item, taskMan);
-				}
-			}
-			printf("Work assigned.\n");
-		}
-	},[=]{
+	}, [=] {
+		postHandler(ppt->getStr(), baseSvr, done, step);
+	}
+	,[=]{
 		LOGW("Parsing failed.\n");
+		done(false);
 	}));
 }
+
+const PhaseHandler PhaseOne = std::bind(
+	PhaseOneProtoFunc
+	, _ProcessWithPPT
+	, std::placeholders::_1
+	, std::placeholders::_2
+	, std::placeholders::_3
+	, std::placeholders::_4
+);
+
+const PhaseHandler PhaseOfClean = std::bind(
+	PhaseOneProtoFunc
+	, _ProcessWithClean
+	, std::placeholders::_1
+	, std::placeholders::_2
+	, std::placeholders::_3
+	, std::placeholders::_4
+);
