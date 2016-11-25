@@ -3,10 +3,14 @@
 #include "fsm/HotTaskItem.h"
 #include "fsm/TaskItemBase.h"
 #import <Foundation/Foundation.h>
+#import <Foundation/NSException.h>
 #include "base/EmComm.h"
 
 #define _PH_TARGET_PATH     "ressrc/"
 #define _PH_CACHE_PATH      "cache/"
+
+
+#define _LONG_PATH  1024
 
 PathHelper PathHelper::_instance;
 
@@ -83,6 +87,57 @@ std::string PathHelper::formatResourceUri(HotTaskItem *pItem){
     return taskURL;
 }
 
+
+void walkPath(const std::string &root, const std::string &current, const CallbackWithFilePath &cb) {
+    if(current.size() > 0 && current.back() != '/'){
+        NSLog(@"Need to know that:current does not end with a slash");
+    }
+    NSString *now = [NSString stringWithUTF8String:current.c_str()];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSError *err = nil;
+    NSArray<NSString *> *entList = [fm contentsOfDirectoryAtPath:now error:&err];
+    if(err!=nil){
+        NSLog(@"Error searching path %@", now);
+        return;
+    }
+    NSMutableArray<NSString*> * dirList = [[[NSMutableArray alloc]init]autorelease];
+    for(NSString *ent:entList){
+        BOOL isDir = NO;
+        NSString * npath = [NSString stringWithFormat:@"%@%@",now, ent];
+        BOOL bExist = [fm fileExistsAtPath:npath isDirectory:&isDir];
+        if(bExist){
+            if(isDir){
+                [dirList addObject:ent];
+            } else {
+                const char *fullSpec = [npath UTF8String];
+                const char *relate = fullSpec + root.size();
+                while( *relate && *relate == '/')
+                    ++relate;
+                cb(relate, fullSpec);
+            }
+        } else {
+            NSLog(@"File<%@> is missing ??", ent);
+        }
+    }
+    for(NSString *dir:dirList){
+        // Always ends with a slash `/'
+        NSString *full = [NSString stringWithFormat:@"%@%@/", now, dir];
+        const char *toDir = [full UTF8String];
+        walkPath(root, toDir, cb);
+    }
+}
+
+void PathHelper::iterateTargetPath(const CallbackWithFilePath &cb)
+{
+    char startSpec[_LONG_PATH + 100];
+    const std::string writable = getWritablePath();
+    strcpy(startSpec, writable.c_str());
+    const char* start = getTargetPath();
+    strcat(startSpec, start);
+    walkPath(startSpec, startSpec, cb);
+}
+
+
 bool PathHelper::DeployOneFile(const char *from, const char *to){
     std::string pre = PathHelper::getInstance().getWritablePath();
     std::string source = pre + from;
@@ -116,4 +171,15 @@ bool PathHelper::DeployOneFile(const char *from, const char *to){
 	return true;
 }
 
-
+bool PathHelper::DeleteOneFile(const std::string &relate) {
+    std::string pre = PathHelper::getInstance().getWritablePath();
+    const char* target = getTargetPath();
+    std::string full = pre + target + relate;
+    NSString *dst = [NSString stringWithUTF8String:full.c_str()];
+    NSError *err = nil;
+    BOOL rv = [[NSFileManager defaultManager] removeItemAtPath:dst error:&err];
+    if(err!=nil){
+        NSLog(@"Deleting error for<%s> : %@", relate.c_str(), err);
+    }
+    return rv == YES;
+}
