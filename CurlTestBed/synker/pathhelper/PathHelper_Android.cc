@@ -4,9 +4,18 @@
 
 #include "PathHelper.h"
 #include "base/EmComm.h"
+
+#include <fcntl.h>
+#include <dirent.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <stdlib.h>
+
 #define _PH_TARGET_PATH     "ressrc/"
 #define _PH_CACHE_PATH      "cache/"
 
+#define _LONG_MAX	1024
 
 //////////////////////////////////////////
 //~ Heder copied from cocos2d-x Starts
@@ -188,6 +197,43 @@ bool PathHelper::DeployOneFile(const char *from, const char *to){
 		create_path(subdir);
     }
 	return copyFile(source.c_str(), target.c_str());
+}
+
+void walkPath(const std::string &root, const std::string &current, const CallbackWithFilePath &cb){
+	if(current.size() > 0 && current.back() != '/'){
+		printf("Oh my god\n");
+		//return;  // let the error happen
+	}
+	struct dirent *ent = nullptr;
+	DIR *pDir = opendir(current.c_str());
+	char buffer[_LONG_MAX+100];
+	while ((ent = readdir(pDir))!=NULL){
+		if(ent->d_type&DT_DIR){
+			if(strcmp(ent->d_name, ".") == 0 || strcmp(ent->d_name, "..") == 0 ){
+					continue;
+			}
+			sprintf(buffer, "%s%s/", current.c_str(), ent->d_name);
+			walkPath(root, buffer, cb);
+		} else {
+			sprintf(buffer, "%s%s", current.c_str(), ent->d_name);
+			const char *relate = buffer + root.size();
+			cb(relate, buffer);
+		}
+	}
+	closedir(pDir);
+}
+
+void PathHelper::iterateTargetPath(const CallbackWithFilePath &cb){
+	std::string startSpec = getWritablePath();
+	startSpec += getTargetPath();
+	walkPath(startSpec, startSpec, cb);
+}
+
+bool PathHelper::DeleteOneFile(const std::string &relate){
+	std::string pre = PathHelper::getInstance().getWritablePath();
+	const char *target = getTargetPath();
+	std::string full = pre + target + relate;
+	return 0 == unlink(full.c_str());
 }
      
 
