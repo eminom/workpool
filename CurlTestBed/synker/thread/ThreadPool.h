@@ -34,7 +34,7 @@ public:
 	static ThreadPool* getInstance();
 
 	void start(int threadCount=_DefaultThread);
-	void stop();
+	void stopPool();
 
 	void assign(Workload*);
 	void cancel(Workload*);
@@ -47,7 +47,8 @@ private:
 	std::list<Workload*> _assignments;
 	std::mutex _tmutex;
 	std::condition_variable _condiv;
-	std::atomic_char _stopped;
+	//std::atomic<char> _stopped;
+	int _stopped;
 };
 
 #endif

@@ -7,6 +7,7 @@
 #include "ThreadPool.h"
 #include "Workload.h"
 #include "AsyncNotifier.h"
+#include "base/LogComm.h"
 #include <cassert>
 #include <algorithm>
 #include <iostream>
@@ -44,9 +45,8 @@ static ThreadPool* _instance;
 #define OutputAfterProcess()	(void*)0;
 #endif
 
-ThreadPool::ThreadPool()
+ThreadPool::ThreadPool():_stopped(0)
 {
-	_stopped = 0;
 }
 
 ThreadPool::~ThreadPool(){ }
@@ -69,7 +69,8 @@ void ThreadPool::start(int tcount) {
     }
 }
 
-void ThreadPool::stop() {
+void ThreadPool::stopPool() {
+	LOGE("Notified of <HALT> of this thread-pool");
 	_stopped = 1;	//~ MARK OFFICIALLY
     _condiv.notify_all();
     for(auto tu:_threads) {
@@ -106,14 +107,18 @@ void ThreadPool::cancel(Workload *work) {
 	}
 }
 
-void ThreadPool::listenNdAccept(ThreadUnit* tu) {
+void ThreadPool::listenNdAccept(ThreadUnit* tUnit) {
 	do {
         Workload* now = nullptr;
         do{
             std::unique_lock<decltype(_tmutex)> lock(_tmutex);
 			// Wake up if thread-pool is stopped or some new assignment is in queue.
             _condiv.wait(lock, [this](){ return !_assignments.empty() || _stopped; });
-            if (_stopped)  {
+			//~ There is a big difference writing bewteen if stopped and if stopped != 0
+			//~ a type of atom_char(operator overloaded)
+            if (_stopped != 0)  {
+				int stopVal = _stopped;
+				LOGE("Thread-pool is forced to halt %d", stopVal);
                 break;
             }
             assert(!_assignments.empty());
@@ -122,10 +127,12 @@ void ThreadPool::listenNdAccept(ThreadUnit* tu) {
 			now->_isProcessing = 1;
         }while(0);
 		//OutputBeforeProcess();
-		AssignProtected(tu, assignment, now)
+		AssignProtected(tUnit, assignment, now)
+		//LOGE("Before first execute:%p", now);
         now->execute();
+		//LOGE("After the execution");
 		AsyncNotifier::getInstance()->schedule([=]{now->finish();});
-		AssignProtected(tu, assignment, nullptr)
+		AssignProtected(tUnit, assignment, nullptr)
 		//OutputAfterProcess()
     }while(true);
 }

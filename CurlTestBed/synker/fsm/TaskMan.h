@@ -7,9 +7,17 @@
 #include <mutex>
 #include <functional>
 #include "base/EmComm.h"
+#include "base/LogComm.h"
 #include "HotTaskItem.h"
 #include "MapInfo.h"
 
+
+#if !defined(_MSC_VER) && !defined(__APPLE__)
+	typedef int TaskCountType;
+#else
+	typedef std::atomic_int TaskCountType;
+#endif
+		
 typedef std::function<bool(bool)> WhenFinish;
 typedef std::function<void(float)> WhenStep;
 typedef const WhenFinish &WhenFinishProto;
@@ -39,29 +47,13 @@ public:
 		_fullTaskCount = count > 0 ? count:1;
 	}
 
-	void notifyTaskFinish(bool failed)	{
-		if(failed){
-			_failCount++;
-		}
-		_taskCount--;
-		if(0==_taskCount){
-			if(!_failCount){
-				doneHandle_(deploy());
-			} else {
-				doneHandle_(false);
-			}
-		} else {
-			float percent = (_fullTaskCount - _taskCount) / float(_fullTaskCount);
-			stepHandle_(percent);
-		}
-	}
-	
+	void notifyTaskFinish(bool failed);
 	bool deploy();
 
 private:
 	const WhenFinish doneHandle_;
 	const WhenStep   stepHandle_;
-	std::atomic_int _taskCount;
+	TaskCountType _taskCount;
 	int _fullTaskCount;
 	int _failCount;
 	MapInfo _mi;

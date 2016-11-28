@@ -18,7 +18,7 @@ public:
 	virtual const char *taskUrl()override;
 	virtual void onPrepare()override;
 	//virtual void onFinalized(CURLcode res)override;
-	virtual std::string toStr();
+	virtual std::string toStr()override;
 	const std::string& getStr()const;
 
 private:

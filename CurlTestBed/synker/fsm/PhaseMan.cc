@@ -38,7 +38,7 @@ void ScheduleDownload(HotTaskIn *_pHot__, TaskMan *taskMan) {
 		LOGW("Download <%s> failed.\n", pHotInfo->relatePath());
 		pHotInfo->incFail();
 		if(pHotInfo->failCount() > _MaxFailPerItem){
-			LOGW("Download <%s> failed. Aborted.\n", pHotInfo->relatePath());
+			LOGE("Download <%s> failed. Aborted.\n", pHotInfo->relatePath());
 			taskMan->notifyTaskFinish(true);//Too many failure for download.
 		} else {
 			ScheduleDownload(pHotInfo, taskMan);
@@ -63,10 +63,10 @@ void VerifyOneByOne(HotTaskIn *_pHot__, TaskMan *taskMan){
 		taskMan->notifyTaskFinish(false);//Notify verification success
 	}, [=]{
 		//~Failed, 
-		LOGW("Verification failure for <%s>\n", pHotInfo->relatePath());
+		LOGE("Verification failure for <%s>\n", pHotInfo->relatePath());
 		pHotInfo->incFail();
 		if(pHotInfo->failCount() > _MaxFailPerItem){
-			LOGW("Verification for <%s> failed. Aborted.\n", pHotInfo->relatePath());
+			LOGE("Verification for <%s> failed. Aborted.\n", pHotInfo->relatePath());
 			taskMan->notifyTaskFinish(true);	//~Verification failure:(Same as download failure)
 		} else {
 			ScheduleDownload(pHotInfo, taskMan);
@@ -76,14 +76,18 @@ void VerifyOneByOne(HotTaskIn *_pHot__, TaskMan *taskMan){
 
 //~ For the main thread context:
 void _ProcessWithPPT(const std::string &textContent, const char *baseSvr, const WhenFinish &done, const WhenStep &step) {
+	LOGW("Parsing content of version info>>>");
 	auto rs = XSplit(textContent, [](char ch) {return '\r' == ch || '\n' == ch; });
 	//printf("Line count is %d\n", rs.size());
 	//Statistics of the current batch work
 	int tc = 0;
+	LOGW("Incoming task for %d", rs.size());
 	for (const auto &line : rs) {
 		TaskItemBase item(line.c_str());
 		if (item) {
 			++tc;
+		} else {
+			LOGE("Failed parsing for one item");
 		}
 	}
 	if (tc > 0) {
@@ -114,16 +118,16 @@ void _ProcessWithClean(const std::string &textContext, const char *baseSvr, cons
 		bool inThisVersion = (dc.find(relate) != dc.end());
 		//printf("<%s>:<%s>\n", fullpath.c_str(), (inThisVersion?"Yes":"No"));
 		if (!inThisVersion) {
-			printf("<%s>:<%s>\n", relate.c_str(), (inThisVersion ? "Yes" : "No"));
+			LOGW("<%s>:<%s>\n", relate.c_str(), (inThisVersion ? "Yes" : "No"));
 			toDelete.push_back(relate);
 		}
 	});
 	for (auto it = toDelete.begin(); it != toDelete.end(); ++it) {
-		printf("Deleting %s ......", it->c_str());
+		LOGW("Deleting %s ......", it->c_str());
 		if (PathHelper::DeleteOneFile(*it)) {
-			printf("OK\n");
+			LOGW("OK\n");
 		} else {
-			printf("Failed\n");
+			LOGE("Failed\n");
 		}
 	}
 	done(true);

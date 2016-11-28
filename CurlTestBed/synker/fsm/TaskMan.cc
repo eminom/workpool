@@ -8,38 +8,6 @@
 
 #include "pathhelper/PathHelper.h"
 #include "base/LogComm.h"
-/*
-#ifdef _MSC_VER
-
-#include <windows.h>
-#include <shlobj.h>
-
-/*
-void DeployOneFile(const char *from, const char *to){
-	const char* rh = strrchr(to, '/');
-	if(rh){
-		char subpath[BUFSIZ] = "";
-		strncpy(subpath, to, rh - to);
-		char cur[MAX_PATH+1];
-		GetCurrentDirectoryA(MAX_PATH, cur);
-		strcat(cur, "/");
-		strcat(cur, subpath);
-		for(int p=strlen(cur)-1;p>=0;--p){
-			if('/'==cur[p]){
-				cur[p] = '\\';
-			}
-		}
-		SECURITY_ATTRIBUTES sa={sizeof(SECURITY_ATTRIBUTES)};
-		int res = SHCreateDirectoryExA(NULL, cur, &sa);
-		//printf("Creating result = %d\n", res);
-	}
-	CopyFileA(from, to, FALSE);
-}
-
-#else
-
-#endif
-*/
 
 bool TaskMan::deploy() {
 	bool completed = true;
@@ -59,3 +27,23 @@ bool TaskMan::deploy() {
 	return completed;
 }
 
+void TaskMan::notifyTaskFinish(bool failed) {
+	if (failed) {
+		_failCount++;
+		LOGE("Failed for one, up to %d", _failCount);
+	}
+	_taskCount--;
+	if (0 == _taskCount) {
+		if (!_failCount) {
+			doneHandle_(deploy());
+		} else {
+			doneHandle_(false);
+		}
+	} else {
+		float percent = (_fullTaskCount - _taskCount) / float(_fullTaskCount);
+		// In android this one shall be troublesome.
+		//int taskCount = _taskCount;
+		//LOGE("FullTask is %d:   Left is <%d>", _fullTaskCount, taskCount);
+		stepHandle_(percent);
+	}
+}
